@@ -35,7 +35,7 @@ export default function Navbar() { {
         <Link href="/" className="text-white hover:text-purple-300 transition-colors">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
+        <Link href="/aboutUs" className="text-white hover:text-purple-300 transition-colors">
           About
         </Link>
         <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
@@ -50,7 +50,7 @@ export default function Navbar() { {
         <Link href="/" className="text-white hover:text-purple-300 transition-colors">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
+        <Link href="/aboutUs" className="text-white hover:text-purple-300 transition-colors">
           About
         </Link>
         <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
