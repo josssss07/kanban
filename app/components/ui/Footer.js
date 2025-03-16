@@ -7,16 +7,16 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <p className="text-blue-300">&copy; {new Date().getFullYear()} Kanban. All rights reserved.</p>
+            <p className="text-white-300">&copy; {new Date().getFullYear()} Kanban. All rights reserved.</p>
           </div>
           <div className="flex space-x-6">
-            <a href="#" className="text-blue-300 hover:text-white transition-colors">
+            <a href="#" className="text-white hover:text-purple-300 transition-colors">
               Terms
             </a>
-            <a href="#" className="text-blue-300 hover:text-white transition-colors">
+            <a href="#" className="text-white hover:text-purple-300 transition-colors">
               Privacy
             </a>
-            <a href="#" className="text-blue-300 hover:text-white transition-colors">
+            <a href="#" className="text-white hover:text-purple-300 transition-colors">
               Contact
             </a>
           </div>

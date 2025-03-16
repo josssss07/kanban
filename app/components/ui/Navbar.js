@@ -32,16 +32,16 @@ export default function Navbar() { {
       
       {/* Desktop menu */}
       <div className="hidden md:flex space-x-10">
-        <Link href="/" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/" className="text-white hover:text-purple-300 transition-colors">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
           About
         </Link>
-        <Link href="/pomodoro" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
           Pomodoro
         </Link>
-        <Link href="/signup" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/signup" className="text-white hover:text-purple-300 transition-colors">
           Sign-Up
         </Link>
       </div>
@@ -50,16 +50,16 @@ export default function Navbar() { {
     {/* Mobile menu */}
     {isOpen && (
       <div className="md:hidden mt-4 flex flex-col space-y-4">
-        <Link href="/" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/" className="text-white hover:text-purple-300 transition-colors">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
           About
         </Link>
-        <Link href="/pomodoro" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
           Pomodoro
         </Link>
-        <Link href="/signup" className="text-white hover:text-blue-300 transition-colors">
+        <Link href="/signup" className="text-white hover:text-purple-300 transition-colors">
           Sign-Up
         </Link>
       </div>

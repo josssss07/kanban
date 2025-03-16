@@ -15,7 +15,7 @@ import React from 'react'
           Stay organized, streamline your workflow, and get more done with our powerful Kanban and productivity system. Visualize your tasks, collaborate with your team, and track progress effortlessly—all in one place.
         </p>
         <button     
-          className="cta-button mt-10 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 opacity-0"
+          className="cta-button mt-10 inline-block bg-purple-600 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 opacity-0"
         >
           Sign Up Now
           <svg className="w-5 h-5 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
