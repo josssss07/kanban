@@ -1,7 +1,14 @@
-import Link from "next/link";
-import React from 'react'
+"use client";
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
- const Hero = () => {
+const Hero = () => {
+  const router = useRouter(); 
+
+  const signInPage = () => {
+    router.push('/Login'); // Redirects user to /login page
+  };
+
   return (
     <div className="flex flex-col md:flex-row min-h-[80vh] container mx-auto px-6 py-20">
       <div className="w-full md:w-1/2 flex-1">
@@ -15,6 +22,7 @@ import React from 'react'
           Stay organized, streamline your workflow, and get more done with our powerful Kanban and productivity system. Visualize your tasks, collaborate with your team, and track progress effortlessly—all in one place.
         </p>
         <button     
+          onClick={signInPage}
           className="cta-button mt-10 inline-block bg-purple-600 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 opacity-0"
         >
           Sign Up Now
@@ -24,7 +32,7 @@ import React from 'react'
         </button>
       </div>
     </div>
-   )
-}
+  );
+};
 
-export default Hero
+export default Hero;
