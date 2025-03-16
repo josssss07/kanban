@@ -31,10 +31,10 @@ const AboutHero = () => {
             Helping teams work smarter and accomplish more together
           </p>
           
-          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
-            We've built a productivity platform that combines intuitive kanban boards
-            with powerful time management tools to transform how teams collaborate.
-          </p>
+            <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+                We&apos;ve built a productivity platform that combines intuitive kanban boards
+                with powerful time management tools to transform how teams collaborate.
+            </p>
           
           
         </div>

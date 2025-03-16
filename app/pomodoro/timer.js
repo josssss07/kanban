@@ -129,7 +129,7 @@ const PomodoroTimer = () => {
               Enjoying your productivity?
             </h3>
             <p className="mb-4 text-gray-300">
-              You've been using the timer for 50 minutes! Sign up now to unlock premium features:
+              You&apos;ve been using the timer for 50 minutes! Sign up now to unlock all our features!!:
             </p>
             <ul className="mb-6 text-gray-300 space-y-2">
               <li className="flex items-center">
@@ -169,7 +169,7 @@ const PomodoroTimer = () => {
                   className="flex-1 bg-gray-700 hover:bg-gray-600 py-2 rounded-lg font-medium transition-colors text-sm"
                   onClick={handleDismissForever}
                 >
-                  Don't Show Again
+                  Don&apos;t Show Again
                 </button>
               </div>
             </div>

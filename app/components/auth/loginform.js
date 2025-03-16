@@ -204,7 +204,7 @@ const AuthForm = ({ type }) => {
         <div className="mt-6 text-center text-white text-sm">
           {type === "login" ? (
             <p>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a href="/signup" className="text-white hover:text-purple-300 font-medium">
                 Sign up
               </a>
