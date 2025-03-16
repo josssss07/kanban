@@ -38,6 +38,9 @@ export default function Navbar() { {
         <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
           About
         </Link>
+        <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
+          Pomodoro
+        </Link>
       </div>
     </div>
     
@@ -49,6 +52,9 @@ export default function Navbar() { {
         </Link>
         <Link href="/about" className="text-white hover:text-purple-300 transition-colors">
           About
+        </Link>
+        <Link href="/pomodoro" className="text-white hover:text-purple-300 transition-colors">
+          Pomodoro
         </Link>
         
       </div>
