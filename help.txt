@@ -5,3 +5,7 @@ once a user is signed in
 change the paths that the users goes to in the actions file so that the user will go 
 to the appropriate areas. 
 this will allow them to make sure that the user is not just u know, kinda lost and goes back to the home page 
+
+
+https://supabase.com/docs/guides/auth/social-login/auth-github
+https://supabase.com/docs/guides/auth/social-login/auth-google
