@@ -7,7 +7,6 @@ import Footer from '@/app/components/ui/Footer'
 const page = () => {
   return (
     <div>
-        <LoginNav></LoginNav>
         <Login></Login> 
         <Footer></Footer>
     </div>

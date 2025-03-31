@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
       <Head>
-        <title>Kanban - Boost Your Workflow</title>
+        <title>kanban - Boost Your Workflow</title>
         <meta name="description" content="Kanban productivity system" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

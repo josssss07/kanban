@@ -4,7 +4,7 @@ const AboutHero = () => {
   return (
     <div className="relative bg-gray-900 text-white">
       {/* Purple gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/70 to-gray-900/90 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/70 z-10"></div>
       
       {/* Background pattern (optional) */}
       <div className="absolute inset-0 opacity-10 z-0">
@@ -22,7 +22,7 @@ const AboutHero = () => {
       <div className="container mx-auto px-6 py-24 md:py-32 relative z-20">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            About Kanban
+            About kanban
           </h1>
           
           <div className="w-24 h-1 bg-purple-500 mx-auto mb-6"></div>

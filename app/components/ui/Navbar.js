@@ -9,7 +9,7 @@ export default function Navbar() { {
     <nav className="px-6 py-4 md:px-10">
     <div className="flex justify-between items-center">
       <Link href="/" className="text-white text-2xl font-bold tracking-wider">
-        Kanban
+        kanban
       </Link>
       
       {/* Mobile menu button */}
