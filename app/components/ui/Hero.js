@@ -6,7 +6,7 @@ const Hero = () => {
   const router = useRouter(); 
 
   const signInPage = () => {
-    router.push('/Login'); // Redirects user to /login page
+    router.push('/login'); // Redirects user to /login page
   };
 
   return (
