@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, Settings, LogOut } from "lucide-react";
+import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, Settings, LogOut, Timer } from "lucide-react";
 import { logout } from "./action";
 import { createClient } from "@/utils/supabase/server";
-
+import PomodoroPage from "./Pomodoro/page";
 // Create content components for each page
 const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
 const CalendarContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Calendar</h1><p>Your calendar content goes here...</p></div>;
@@ -20,6 +20,7 @@ export default function Dashboard({ user }) {
     boards: <BoardsContent />,
     calendar: <CalendarContent />,
     notebook: <NotebookContent />,
+    pomodoro: <PomodoroPage></PomodoroPage>
   };
 
   return (
@@ -64,18 +65,17 @@ export default function Dashboard({ user }) {
             isActive={currentPage === "notebook"}
             onClick={() => setCurrentPage("notebook")} 
           />
-        </nav>
+
+          <SidebarItem 
+            icon={<Timer size={20} />} 
+            text="Pomodoro" 
+            isOpen={isOpen} 
+            isActive={currentPage === "pomodoro"}
+            onClick={() => setCurrentPage("pomodoro")} 
+          />        </nav>
 
         {/* Settings & Extras */}
-        <div className="absolute bottom-12 ">
-          <SidebarItem 
-            icon={<Settings size={20} />} 
-            text="Settings" 
-            isOpen={isOpen} 
-            isActive={currentPage === "settings"}
-            onClick={() => setCurrentPage("settings")} 
-          />
-        </div>
+        
 
         {/* Logout Section - at the bottom of sidebar */}
         <div className="absolute bottom-4 left-0 right-0 px-4">
