@@ -40,5 +40,5 @@ export async function signup(formData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/Home')
+  redirect('/mainhome')
 }
