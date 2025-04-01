@@ -1,10 +1,19 @@
 @import "tailwindcss";
-html{
+@tailwind utilities;
+
+html {
   scroll-behavior: smooth;
 }
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-prefer: "light";
+  --color-text: rgb(0, 0, 0);
+  --color-background: rgb(255, 255, 255);
+  --color-dialog: rgb(255, 255, 255);
+  --color-backgroundlighter: rgb(244, 247, 253);
+  --color-lineborder: rgb(228, 235, 250);
+  --color-lineinput: rgb(131, 144, 164);
 }
 
 @theme inline {
@@ -16,47 +25,66 @@ html{
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-prefer: "dark";
+    --color-text: rgb(255, 255, 255);
+    --color-background: rgb(0, 0, 0);
+    --color-dialog: rgb(43, 44, 55);
+    --color-backgroundlighter: rgb(32, 33, 44);
+    --color-lineborder: rgb(62, 63, 76);
+    --color-lineinput: rgb(130, 143, 163);
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
 }
-
+[data-radix-focus-scope] {
+  pointer-events: auto;
+}
 
 /* Add this to your global CSS file (e.g., globals.css) */
 
 /* For Webkit browsers (Chrome, Safari, newer versions of Edge) */
 ::-webkit-scrollbar {
-  width: 10px;  /* Width of the scrollbar */
+  width: 10px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;  /* Make the track transparent */
+  background: transparent; /* Make the track transparent */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);  /* Semi-transparent scrollbar thumb */
-  border-radius: 6px;  /* Rounded corners */
-  border: 2px solid transparent;  /* Creates padding around the scrollbar thumb */
-  background-clip: padding-box;  /* Ensures the border is also transparent */
+  background-color: rgba(
+    155,
+    155,
+    155,
+    0.5
+  ); /* Semi-transparent scrollbar thumb */
+  border-radius: 6px; /* Rounded corners */
+  border: 2px solid transparent; /* Creates padding around the scrollbar thumb */
+  background-clip: padding-box; /* Ensures the border is also transparent */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(155, 155, 155, 0.7);  /* Slightly less transparent on hover */
+  background-color: rgba(
+    155,
+    155,
+    155,
+    0.7
+  ); /* Slightly less transparent on hover */
 }
 
 /* For Firefox */
 * {
-  scrollbar-width: thin;  /* "auto" or "thin" */
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;  /* thumb and track color */
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent; /* thumb and track color */
 }
 
 /* For Edge and IE */
 body {
-  -ms-overflow-style: -ms-autohiding-scrollbar;  /* Auto-hiding scrollbar for Edge/IE */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* Auto-hiding scrollbar for Edge/IE */
 }
