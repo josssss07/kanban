@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, Settings, LogOut, Timer } from "lucide-react";
+import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, User, LogOut, Timer } from "lucide-react";
 import { logout } from "./action";
 import { createClient } from "@/utils/supabase/server";
 import PomodoroPage from "./Pomodoro/page";
-// Create content components for each page
+import Calendar from "./Calendar/page";
+import ContextWrapper from "./Calendar/context/ContextWrapperr";
+
+// Create content components for each page(temp)
 const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
-const CalendarContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Calendar</h1><p>Your calendar content goes here...</p></div>;
 const NotebookContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Notebook</h1><p>Your notebook content goes here...</p></div>;
-const SettingsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Settings</h1><p>Your settings content goes here...</p></div>;
 
 export default function Dashboard({ user }) {
   
@@ -18,7 +19,7 @@ export default function Dashboard({ user }) {
   // Page content mapping
   const pageContent = {
     boards: <BoardsContent />,
-    calendar: <CalendarContent />,
+    calendar: <ContextWrapper><Calendar/></ContextWrapper>,
     notebook: <NotebookContent />,
     pomodoro: <PomodoroPage></PomodoroPage>
   };
@@ -26,7 +27,7 @@ export default function Dashboard({ user }) {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <aside className={`h-screen bg-gray-900 text-white p-4 fixed transition-all duration-300 ${isOpen ? "w-64" : "w-20"}`}>
+      <aside className={`h-screen bg-gray-800 text-white p-4 fixed transition-all duration-300 ${isOpen ? "w-64" : "w-20"}`}>
         {/* Toggle Button */}
         <button 
           className="text-gray-400 hover:text-white mb-6"
@@ -41,6 +42,14 @@ export default function Dashboard({ user }) {
             <p className="text-sm text-gray-300 truncate">{user.email}</p>
           </div>
         )}
+        {/* display a user icon if sidebar is colapsed */}
+        {
+          !isOpen &&(
+            <div className="mb-6 p-2">
+              <User></User>
+            </div>
+          )
+        }
 
         {/* Navigation Links */}
         <nav className="space-y-2">
