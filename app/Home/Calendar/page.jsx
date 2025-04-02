@@ -1,3 +1,4 @@
+'use client';
 import React, {useContext, useState, useEffect } from 'react';
 import { getMonth } from './utils';
 import CalendarHeader from './components/calendarHeader';
@@ -7,6 +8,7 @@ import GlobalContext from './context/GlobalContext';
 import { createClient } from '@/utils/supabase/server';
 import EventModal from './components/EventModal';
 const Calendar = () => {
+
  
 
   // TODO: FIX THIS
