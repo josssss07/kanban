@@ -28,7 +28,7 @@ export default function Dashboard({ user }) {
   return (
     <div className="flex relative">
       {/* Sidebar */}
-      <aside className={`h-screen bg-gray-800 text-white p-4 fixed transition-all duration-300 ${isOpen ? "w-64" : "w-20"}
+      <aside className={`h-screen bg-gray-800 text-white p-4 fixed transition-all duration-300 z-40 ${isOpen ? "w-64" : "w-20"}
         ${isMobileOpen ? "left-0 w-64" : "-left-64"} md:left-0`}
       >
         {/* Toggle Button */}
