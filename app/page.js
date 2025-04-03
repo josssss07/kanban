@@ -13,17 +13,17 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const checkUserSession = async () => {
-      const supabase = await createClient();
-      const { data: { session } } = await supabase.auth.getSession();
+    // const checkUserSession = async () => {
+    //   const supabase = await createClient();
+    //   const { data: { session } } = await supabase.auth.getSession();
 
-      if (session) {
-        // Redirect to /Home if the user is logged in
-        router.push('/Home');
-      }
-    };
+    //   if (session) {
+    //     // Redirect to /Home if the user is logged in
+    //     router.push('/Home');
+    //   }
+    // };
 
-    checkUserSession();
+    // checkUserSession();
 
     // Background animation
     anime({
