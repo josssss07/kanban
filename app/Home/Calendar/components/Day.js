@@ -24,8 +24,23 @@ export default function Day({ day, rowIdx }) {
       ? "bg-purple-600 text-white rounded-full w-7"
       : "";
   }
+
+  // Function to get the appropriate background color class for each label
+  function getEventBgClass(label) {
+    const labelColorMap = {
+      indigo: "bg-indigo-800 text-white",
+      gray: "bg-gray-800 text-white",
+      green: "bg-green-800 text-white",
+      blue: "bg-blue-800 text-white",
+      red: "bg-red-800 text-white",
+      purple: "bg-purple-800 text-white"
+    };
+    
+    return labelColorMap[label] || "bg-gray-800 text-white"; // Default to gray if label not found
+  }
+
   return (
-    <div className="border border-purple-400 flex flex-col">
+    <div className="border border-purple-400 flex flex-col h-full">
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
           <p className="text-sm mt-1">
@@ -33,13 +48,13 @@ export default function Day({ day, rowIdx }) {
           </p>
         )}
         <p
-          className={`text-sm p-1 my-1 text-center  ${getCurrentDayClass()}`}
+          className={`text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}
         >
           {day.format("DD")}
         </p>
       </header>
       <div
-        className="flex-1 cursor-pointer"
+        className="flex-1 cursor-pointer overflow-y-auto max-h-24 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-transparent"
         onClick={() => {
           setDaySelected(day);
           setShowEventModal(true);
@@ -48,8 +63,13 @@ export default function Day({ day, rowIdx }) {
         {dayEvents.map((evt, idx) => (
           <div
             key={idx}
-            onClick={() => setSelectedEvent(evt)}
-            className={`bg-${evt.label}-200 px-3 mr-3 text text-sm rounded mb-1 truncate`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setDaySelected(day);
+              setSelectedEvent(evt);
+              setShowEventModal(true);
+            }}
+            className={`${getEventBgClass(evt.label)} px-3 mr-3 text-sm rounded mb-1 truncate`}
           >
             {evt.title}
           </div>

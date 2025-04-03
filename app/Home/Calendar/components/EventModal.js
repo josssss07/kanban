@@ -2,7 +2,14 @@ import React, { useContext, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 import { Calendar1Icon, X, Trash2, Clock } from "lucide-react";
 
-const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
+const labelsClasses = [
+  { name: "indigo", bg: "bg-indigo-500", selectedBg: "bg-indigo-500 border-white" },
+  { name: "gray", bg: "bg-gray-500", selectedBg: "bg-gray-500 border-white" },
+  { name: "green", bg: "bg-green-500", selectedBg: "bg-green-500 border-white" },
+  { name: "blue", bg: "bg-blue-500", selectedBg: "bg-blue-500 border-white" },
+  { name: "red", bg: "bg-red-500", selectedBg: "bg-red-500 border-white" },
+  { name: "purple", bg: "bg-purple-500", selectedBg: "bg-purple-500 border-white" }
+];
 
 export default function EventModal() {
   const { setShowEventModal, daySelected, dispatchCalEvent, selectedEvent } =
@@ -13,7 +20,7 @@ export default function EventModal() {
     selectedEvent ? selectedEvent.description : ""
   );
   const [selectedLabel, setSelectedLabel] = useState(
-    selectedEvent ? selectedEvent.label : labelsClasses[0]
+    selectedEvent ? selectedEvent.label : labelsClasses[0].name
   );
   const [startTime, setStartTime] = useState(
     selectedEvent ? selectedEvent.startTime : "12:00"
@@ -22,7 +29,7 @@ export default function EventModal() {
     selectedEvent ? selectedEvent.endTime : "13:00"
   );
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const calendarEvent = {
       title,
@@ -32,6 +39,7 @@ export default function EventModal() {
       startTime,
       endTime,
       id: selectedEvent ? selectedEvent.id : Date.now(),
+      
     };
 
     dispatchCalEvent({
@@ -40,6 +48,10 @@ export default function EventModal() {
     });
 
     setShowEventModal(false);
+
+
+    console.log("creating calendar event ");
+    
   }
 
   return (
@@ -102,15 +114,17 @@ export default function EventModal() {
             onChange={(e) => setDescription(e.target.value)}
           />
           <div className="flex gap-2 mt-2">
-            {labelsClasses.map((lblClass) => (
+            {labelsClasses.map((label) => (
               <span
-                key={lblClass}
-                onClick={() => setSelectedLabel(lblClass)}
-                className={`bg-${lblClass}-500 w-6 h-6 rounded-full cursor-pointer flex items-center justify-center border-2 transition-all ${
-                  selectedLabel === lblClass ? "border-white" : "border-transparent"
-                }`}
+                key={label.name}
+                onClick={() => setSelectedLabel(label.name)}
+                className={`${
+                  selectedLabel === label.name ? label.selectedBg : label.bg
+                } w-6 h-6 rounded-full cursor-pointer flex items-center justify-center border-2 ${
+                  selectedLabel === label.name ? "border-white" : "border-transparent"
+                } transition-all`}
               >
-                {selectedLabel === lblClass && <span className="text-white">✓</span>}
+                {selectedLabel === label.name && <span className="text-white">✓</span>}
               </span>
             ))}
           </div>

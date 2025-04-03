@@ -1,17 +1,28 @@
-// import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-// import { cookies } from 'next/headers'
-// import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+// The client you created from the Server-Side Auth instructions
+import { createClient } from '@/utils/supabase/server'
 
-// export async function GET(request) {
-//   const url = new URL(request.url)
-//   const code = url.searchParams.get('code')
-  
-//   if (code) {
-//     const cookieStore = cookies()
-//     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
-//     await supabase.auth.exchangeCodeForSession(code)
-//   }
+export async function GET() {
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
+  // If "next" is in param, use it as the redirect URL, otherwise go to home (`/Home`)
+  const next = searchParams.get('next') ?? '/Home'
 
-//   // URL to redirect to after sign in process completes
-//   return NextResponse.redirect(new URL('/Home', request.url))
-// }
+  if (code) {
+    const supabase = await createClient()
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
+      
+      // Always redirect to `/Home` regardless of environment
+      if (forwardedHost) {
+        return NextResponse.redirect(`https://${forwardedHost}/Home`)
+      } else {
+        return NextResponse.redirect(`${origin}/Home`)
+      }
+    }
+  }
+
+  // Return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+}

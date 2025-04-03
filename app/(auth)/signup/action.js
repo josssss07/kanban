@@ -42,3 +42,24 @@ export async function signup(formData) {
   revalidatePath('/', 'layout')
   redirect('/Home')
 }
+
+
+export async function signinWithGoogle() {
+  const supabase = await createClient();
+  const { data,error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      scopes: 'https://www.googleapis.com/auth/calendar',
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
+    }
+  });
+
+  if (data.url) {
+    redirect(data.url)
+  }
+  if(error){
+    
+    console.error("Error logging in with Google:", error);
+    return { error: "Error logging in with Google, please try again later" };
+  }
+}
