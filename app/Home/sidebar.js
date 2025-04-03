@@ -2,14 +2,13 @@
 import { useState } from "react";
 import { Menu, ClipboardList, Notebook, Inbox, CalendarDays, User, LogOut, Timer } from "lucide-react";
 import { logout } from "./action";
-import { createClient } from "@/utils/supabase/server";
 import PomodoroPage from "./Pomodoro/page";
 import Calendar from "./Calendar/page";
 import ContextWrapper from "./Calendar/context/ContextWrapperr";
+import Notes from "./Notes/page";
 
 // Create content components for each page(temp)
 const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
-const NotebookContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Notebook</h1><p>Your notebook content goes here...</p></div>;
 
 export default function Dashboard({ user }) {
 
@@ -21,7 +20,7 @@ export default function Dashboard({ user }) {
   const pageContent = {
     boards: <BoardsContent />,
     calendar: <ContextWrapper><Calendar/></ContextWrapper>,
-    notebook: <NotebookContent />,
+    notebook: <Notes></Notes>,
     pomodoro: <PomodoroPage></PomodoroPage>
   };
 
