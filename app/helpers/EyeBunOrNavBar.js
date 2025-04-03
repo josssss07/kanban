@@ -11,6 +11,7 @@ import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
 
 export default function EyeOrNav() {
+  console.log("run eye or nav bar");
   var colorVar;
   const [colorTheme, setColorTheme] = useState(null);
   useEffect(() => {

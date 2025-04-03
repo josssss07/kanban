@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import { logout } from './action'
 import { createClient } from '@/utils/supabase/server'
 import Sidebar from './sidebar';
-import RootLayout from '../layout';
 
 
 

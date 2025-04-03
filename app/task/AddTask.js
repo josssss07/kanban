@@ -81,8 +81,6 @@ export default function AddNewTask({ open, onChange }) {
         taskname: task.name,
         taskdescription: task.description,
         headerid: selectedHeader.headerid,
-        totalsubtaskcompleted: 0,
-        totalsubtask: 0,
         startdate: task.startDate,
         endtime: task.endTime,
       });

@@ -75,7 +75,7 @@ export async function signup(formData) {
   }
 
   revalidatePath('/', 'layout');
-  redirect('/mainhome');
+  redirect('/home');
 
 
 }

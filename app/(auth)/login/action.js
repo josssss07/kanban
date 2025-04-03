@@ -18,7 +18,7 @@ export async function login(formData) {
     redirect('/error')
   }
 
-  revalidatePath('/mainhome', 'layout')
-  redirect('/mainhome')
+  revalidatePath('/home', 'layout')
+  redirect('/home')
 }
 

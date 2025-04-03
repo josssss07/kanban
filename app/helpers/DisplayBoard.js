@@ -3,19 +3,21 @@ import { useRouter } from "next/navigation";
 //add suspense
 import PageSection from "../components/ui/NavBar/PageSection";
 import { useContext, useEffect, useState } from "react";
-import { BoardNameContext } from "./DisplayNavContext";
+import { BoardNameContext} from "./DisplayNavContext";
+import { UserIdContext } from "./BoardContext";
 import supabase from "../supabaseclient";
 
 export default function DisplayBoards({ state, stateChange, newElem }) {
   const [board, setBoard] = useState();
   const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [userId , setUserId] = useContext(UserIdContext);
 
   const router = useRouter();
   useEffect(() => {
     console.log("render again to fetch boards");
     const fetchData = async () => {
       try {
-        const {data:BoardData , error:BoardError} = await supabase.from("boards").select("*").eq("userid" , 1);
+        const {data:BoardData , error:BoardError} = await supabase.from("boards").select("*").eq("userid" , userId);
         //fetch("/api/routes", { cache: "no-store" });
         if (BoardError) {
           throw new Error("failed to fetch board");
