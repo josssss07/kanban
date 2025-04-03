@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, Settings, LogOut } from "lucide-react";
+import { Menu, ClipboardList, Notebook, Inbox,CalendarDays, User, LogOut, Timer } from "lucide-react";
 import { logout } from "./action";
 import { createClient } from "@/utils/supabase/server";
+import PomodoroPage from "./Pomodoro/page";
+import Calendar from "./Calendar/page";
+import ContextWrapper from "./Calendar/context/ContextWrapperr";
 
-// Create content components for each page
+// Create content components for each page(temp)
 const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
-const CalendarContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Calendar</h1><p>Your calendar content goes here...</p></div>;
 const NotebookContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Notebook</h1><p>Your notebook content goes here...</p></div>;
-const SettingsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Settings</h1><p>Your settings content goes here...</p></div>;
 
 export default function Dashboard({ user }) {
   
@@ -18,14 +19,15 @@ export default function Dashboard({ user }) {
   // Page content mapping
   const pageContent = {
     boards: <BoardsContent />,
-    calendar: <CalendarContent />,
+    calendar: <ContextWrapper><Calendar/></ContextWrapper>,
     notebook: <NotebookContent />,
+    pomodoro: <PomodoroPage></PomodoroPage>
   };
 
   return (
     <div className="flex">
       {/* Sidebar */}
-      <aside className={`h-screen bg-gray-900 text-white p-4 fixed transition-all duration-300 ${isOpen ? "w-64" : "w-20"}`}>
+      <aside className={`h-screen bg-gray-800 text-white p-4 fixed transition-all duration-300 ${isOpen ? "w-64" : "w-20"}`}>
         {/* Toggle Button */}
         <button 
           className="text-gray-400 hover:text-white mb-6"
@@ -40,6 +42,14 @@ export default function Dashboard({ user }) {
             <p className="text-sm text-gray-300 truncate">{user.email}</p>
           </div>
         )}
+        {/* display a user icon if sidebar is colapsed */}
+        {
+          !isOpen &&(
+            <div className="mb-6 p-2">
+              <User></User>
+            </div>
+          )
+        }
 
         {/* Navigation Links */}
         <nav className="space-y-2">
@@ -64,18 +74,17 @@ export default function Dashboard({ user }) {
             isActive={currentPage === "notebook"}
             onClick={() => setCurrentPage("notebook")} 
           />
-        </nav>
+
+          <SidebarItem 
+            icon={<Timer size={20} />} 
+            text="Pomodoro" 
+            isOpen={isOpen} 
+            isActive={currentPage === "pomodoro"}
+            onClick={() => setCurrentPage("pomodoro")} 
+          />        </nav>
 
         {/* Settings & Extras */}
-        <div className="absolute bottom-12 ">
-          <SidebarItem 
-            icon={<Settings size={20} />} 
-            text="Settings" 
-            isOpen={isOpen} 
-            isActive={currentPage === "settings"}
-            onClick={() => setCurrentPage("settings")} 
-          />
-        </div>
+        
 
         {/* Logout Section - at the bottom of sidebar */}
         <div className="absolute bottom-4 left-0 right-0 px-4">
