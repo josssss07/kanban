@@ -15,49 +15,40 @@ export default function EditBoard({ open, onChange }) {
   const [headers, setHeaders] = useState([]);
   const [oldHeaders, setOldHeaders] = useState([]);
 
-
   async function fetchHeaders() {
     try {
       const { data: header, error } = await supabase
         .from("headers")
         .select("*")
         .eq("boardid", boardDetails.id);
-  
+
       if (error) throw new Error("Failed to fetch headers");
-  
+
       if (header) {
-        setHeaders([...header]);  // ✅ Forces state update
+        setHeaders([...header]); // ✅ Forces state update
         setOldHeaders([...header]);
       }
     } catch (err) {
-      console.error(err);
+      throw new Error("Failed to run fetchHeader", err);
     }
   }
-  
+
   useEffect(() => {
     if (boardDetails?.id) {
       fetchHeaders();
     }
   }, [boardDetails?.id]);
-  
-  const [forceRender, setForceRender] = useState(false);
-
-  useEffect(() => {
-    console.log("Headers updated:", headers);
-  }, [headers]);
-  
-
-
 
   function removeFromList(header) {
-    setHeaders((prevItems) => prevItems.filter((item) => item.headerid !== header.headerid));
-    setOldHeaders((prevItems) => prevItems.filter((item) => item.headername !== header.headername));
-  
-    DeleteHeader(header).then(() => {
-      console.log("Deleted header successfully");
-    });
+    setHeaders((prevItems) =>
+      prevItems.filter((item) => item.headerid !== header.headerid)
+    );
+    setOldHeaders((prevItems) =>
+      prevItems.filter((item) => item.headername !== header.headername)
+    );
+
+    DeleteHeader(header);
   }
-  
 
   function addToList() {
     setHeaders((prevItems) => [
@@ -71,13 +62,12 @@ export default function EditBoard({ open, onChange }) {
   }
 
   function editList(value, index) {
-    setHeaders((prevItems) => 
+    setHeaders((prevItems) =>
       prevItems.map((item, idx) =>
         idx === index ? { ...item, headername: value } : item
       )
     );
   }
-  
 
   function changeBoardName(boardname) {
     setBoardDetails((prevBoard) => ({
@@ -86,30 +76,24 @@ export default function EditBoard({ open, onChange }) {
     }));
   }
 
-
   async function UpdateBoard() {
     const { data: board, error: boardError } = await supabase
       .from("boards")
       .update({ boardname: boardDetails.name })
       .eq("boardid", boardDetails.id);
     if (boardError) {
-      throw new Error("Update board failed");
+      throw new Error("Update board failed", boardError);
     }
-    console.log(board);
   }
 
   async function handleSubmit(e) {
-    console.log("triggered handle");
     e.preventDefault();
-    console.log("outputting headers");
-    console.log(headers);
     if (oldHeaders.length < headers.length) {
       for (let i = oldHeaders.length; i < headers.length; i++) {
-        await insertNewHeader(headers[i] , boardDetails);
+        await insertNewHeader(headers[i], boardDetails);
       }
     }
     headers.forEach(async (header, index) => {
-      console.log(header);
       if (
         !oldHeaders[index] ||
         header.headername !== oldHeaders[index].headername
@@ -120,15 +104,13 @@ export default function EditBoard({ open, onChange }) {
 
     await UpdateBoard();
     await fetchHeaders();
-    setBoardDetails((prevBoard)=>({
+    setBoardDetails((prevBoard) => ({
       ...prevBoard,
-      change: !prevBoard.change
+      change: !prevBoard.change,
     }));
 
     onChange(!open);
   }
-
-  console.log(headers);
 
   return (
     <div>
@@ -171,7 +153,6 @@ export default function EditBoard({ open, onChange }) {
                   onClickFun={() => {
                     removeFromList(header);
                   }}
-                  
                 >
                   X
                 </Button>

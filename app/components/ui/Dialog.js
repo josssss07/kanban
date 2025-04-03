@@ -9,7 +9,7 @@ export default function CustomDialog({
   heighty,
   titleWidth = "w-fit",
   children,
-  header
+  header,
 }) {
   return (
     <div
@@ -31,7 +31,7 @@ export default function CustomDialog({
               {title}
             </Dialog.Title>
             <div>{children}</div>
-            <Dialog.Description/>
+            <Dialog.Description />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

@@ -18,9 +18,9 @@ export default function ChangeOptionBoard({ open, onChange }) {
       ) : undefined}
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.DialogTitle/>
+        <Dialog.DialogTitle />
         <Dialog.Content className="absolute top-14 right-0 border-2 border-[var(--color-lineborder)] bg-[var(--color-dialog)] p-2  rounded-md ">
-          <Dialog.Description/>
+          <Dialog.Description />
           <div>
             <button
               onClick={() => {
@@ -38,7 +38,7 @@ export default function ChangeOptionBoard({ open, onChange }) {
             >
               Delete Board
             </button>
-            </div>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

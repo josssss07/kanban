@@ -11,12 +11,10 @@ import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
 
 export default function EyeOrNav() {
-  console.log("run eye or nav bar");
   var colorVar;
   const [colorTheme, setColorTheme] = useState(null);
   useEffect(() => {
     colorVar = window.localStorage.getItem("color-theme");
-    // console.log(colorVar+" is so and so ");
     if (colorVar == null) {
       colorVar = getComputedStyle(document.documentElement)
         .getPropertyValue("--color-prefer")
@@ -26,12 +24,10 @@ export default function EyeOrNav() {
   }, []);
 
   useEffect(() => {
-    // console.log(colorTheme);
     toggleTheme();
   }, [colorTheme]);
 
   function toggleTheme() {
-    // console.log(colorTheme);
     window.localStorage.setItem(
       "color-theme",
       colorTheme == null ? colorVar : colorTheme
@@ -93,7 +89,7 @@ export default function EyeOrNav() {
     state: false,
     newElem: undefined,
   });
-  // console.log(newBoard.state);
+
   function setBoard(newstate) {
     console.log(newstate + " new ");
     setNewBoard((prevBoard) => ({
@@ -117,8 +113,6 @@ export default function EyeOrNav() {
   function setDisplay() {
     setDisplayNav(!displayNav);
   }
-
-  console.log(newBoard.state + " new board state");
 
   return (
     <>

@@ -15,6 +15,7 @@ export default function DisplayContext({ children }) {
     name: "Loading",
     id: 0,
     change: true,
+    newBoard: false,
   });
   useEffect(() => {
     if (Board) {

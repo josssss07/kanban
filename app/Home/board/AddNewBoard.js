@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CustomDialog from "@/app/components/ui/Dialog.js";
 import Button from "@/app/components/ui/Button.js";
 import { NextResponse } from "next/server.js";
 import supabase from "@/app/supabaseclient";
+import { UserIdContext } from "@/app/helpers/BoardContext";
+import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
 
 export default function AddNewBoard({ open, onChange, newElem }) {
-  // need to add func to add column
-  // just increment the number of columns
   const heightx = 400;
   const heighty = 500;
   const [columnsList, setColumnList] = useState(["ToDo", "Doing"]);
   const [boardName, setBoardName] = useState(null);
+  const [userid, setUserId] = useContext(UserIdContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
 
   function removeFromList(itemToRemove) {
     setColumnList((prevItems) =>
@@ -27,29 +29,25 @@ export default function AddNewBoard({ open, onChange, newElem }) {
   }
 
   async function saveInBackend(e) {
-    console.log("clicked");
     e.preventDefault();
     try {
       const { data: addTask, error: addTaskError } = await supabase
         .from("boards")
-        .insert([{ boardname: boardName, userid: 1 }]);
+        .insert([{ boardname: boardName, userid: userid }]);
 
       if (addTaskError) {
         alert("Faild to create Board: " + addTaskError);
       }
 
-      console.log("success: ");
       const { data: board, error: BoardError } = await supabase
         .from("boards")
         .select("*")
         .eq("boardname", boardName);
       if (BoardError) {
-        console.log("failed to selet board");
+        throw new Error("Failed to fetch board", BoardError);
       }
 
       const id = board[0].boardid;
-      console.log(board);
-      console.log(id);
 
       const postHeader = async (columnsList) => {
         try {
@@ -61,19 +59,16 @@ export default function AddNewBoard({ open, onChange, newElem }) {
 
           const results = await Promise.all(insertPromises);
 
-          // Check for errors in the results
           results.forEach(({ error }, index) => {
             if (error) {
-              console.error(
+              throw new Error(
                 `Error inserting header '${columnsList[index]}':`,
                 error
               );
             }
           });
-
-          console.log("All headers inserted successfully");
         } catch (err) {
-          console.error("Unexpected error:", err);
+          throw new Error(" Unable to run postHeader:", err);
         }
       };
 
@@ -87,6 +82,7 @@ export default function AddNewBoard({ open, onChange, newElem }) {
 
     onChange(false);
     newElem(boardName);
+    setBoardDetails(!boardDetails.newBoard);
   }
 
   return (

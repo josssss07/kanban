@@ -8,9 +8,6 @@ export default function NavBar({ clickBun, children }) {
       hideOnInteractOutside={false}
       modal={false}
     >
-      {/* <Ariakit.DialogDescription>
-        {children}
-      </Ariakit.DialogDescription> */}
       <div className="absolute top-0 h-full border-r-2 bg-[var(--color-dialog)] border-r-[var(--color-lineborder)] md:w-1/5">
         {children}
       </div>

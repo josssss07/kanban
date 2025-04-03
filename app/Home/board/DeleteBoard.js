@@ -17,17 +17,13 @@ export default function DeleteBoard({
   const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
 
   async function deleteBoard() {
-    console.log("called delete board function");
-    console.log(boardDetails.id);
-    const {data:deletedBoard , error:deleteBoardError} = await supabase.from("boards").delete().eq("boardid" , boardDetails.id) 
-    
-    // fetch(`./api/${boardDetails.id}`, {
-    //   method: "DELETE",
-    // });
+    const { data: deletedBoard, error: deleteBoardError } = await supabase
+      .from("boards")
+      .delete()
+      .eq("boardid", boardDetails.id);
 
-    console.log("delete function");
     if (deleteBoardError) {
-      alert(deleteBoardError);
+      throw new Error("Failed to delete board", deleteBoardError);
     }
 
     setBoards(
