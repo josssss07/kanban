@@ -4,6 +4,7 @@ import AddColumns from "../AddColum";
 import { useState, useEffect, useContext } from "react";
 import supabase from "@/app/supabaseclient";
 import { useParams } from "next/navigation";
+import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
 
 
 
@@ -17,6 +18,7 @@ export default function Board(){
         
     const [headers, setHeaders] = useState();
     const [tasks, setTasks] = useState();
+    const [boardDetails , setBoardDetails] = useContext(BoardNameContext);
     //const [boardName, setBoardName] = useContext();//not complete need to know boad name using another api
     useEffect(()=>{
         // console.log("hi");
@@ -36,11 +38,12 @@ export default function Board(){
                     const { data: taskData, error: taskError } = await supabase.from("tasks").select("*").eq("headerid" , header.headerid);
                     // fetch(`/headers/api/${header.headerid}`, {cache: 'no-store'});
                     
-                if(taskError){
-                    throw new Error("failed to fetch tasks");
-                }
-                //  console.log(taskData);
-                return {data:taskData};
+      if (taskError) {
+        console.error(`Error fetching tasks for header ${header.headerid}:`, taskError);
+        return { data: [] }; // Ensure an empty array is returned in case of an error
+      }
+
+      return { data: taskData || [] };
                 
                 });
 
@@ -52,16 +55,16 @@ export default function Board(){
             }
         };
         fetchData();
-    },[params.boardid]);
+    },[params.boardid , boardDetails.change]);
     // console.log(headers);
     console.log(tasks);
 
 
     return(<div className = "flex">
     {headers== undefined? <div>Loading</div>:headers.map((header, index)=>{return (<div className=" overflow-y-auto max-h-[90vh]" key={header.headerid}>
-            <div className="text-medium-grey p-2"><div className="p-1 text-body-l">{header.headername} ({tasks== undefined? 0:tasks[index].data.length})</div>
+            <div className="text-medium-grey p-2"><div className="p-1 text-body-l">{header.headername} ({tasks== undefined? 0:tasks[index]?.data?.length})</div>
            {tasks== undefined?<div>Loading</div>:
-           <IndividualTask  tasks = {tasks[index].data} key={Math.random()} status={header.headername}/> }
+           <IndividualTask  tasks = {tasks[index]?.data} key={Math.random()} status={header.headername}/> }
            </div>
         </div>)})}
         

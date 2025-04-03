@@ -9,6 +9,7 @@ export default function CustomDialog({
   heighty,
   titleWidth = "w-fit",
   children,
+  header
 }) {
   return (
     <div

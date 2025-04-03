@@ -26,55 +26,67 @@ export default function AddNewBoard({ open, onChange, newElem }) {
     );
   }
 
-  async function saveInBackend(e){
+  async function saveInBackend(e) {
     console.log("clicked");
     e.preventDefault();
-    try{
-        const {data:addTask , error:addTaskError} = await supabase.from("boards").insert([{boardname:boardName ,userid:1 }]) 
-        // fetch("api/1",{
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     boardName,
-        //     userId: 1,
-        //   }),
-        // });
+    try {
+      const { data: addTask, error: addTaskError } = await supabase
+        .from("boards")
+        .insert([{ boardname: boardName, userid: 1 }]);
 
-        if(addTaskError){
-          alert("Faild to create Board: "+ addTaskError );
+      if (addTaskError) {
+        alert("Faild to create Board: " + addTaskError);
+      }
+
+      console.log("success: ");
+      const { data: board, error: BoardError } = await supabase
+        .from("boards")
+        .select("*")
+        .eq("boardname", boardName);
+      if (BoardError) {
+        console.log("failed to selet board");
+      }
+
+      const id = board[0].boardid;
+      console.log(board);
+      console.log(id);
+
+      const postHeader = async (columnsList) => {
+        try {
+          const insertPromises = columnsList.map((header) =>
+            supabase
+              .from("headers")
+              .insert([{ headername: header, boardid: id }])
+          );
+
+          const results = await Promise.all(insertPromises);
+
+          // Check for errors in the results
+          results.forEach(({ error }, index) => {
+            if (error) {
+              console.error(
+                `Error inserting header '${columnsList[index]}':`,
+                error
+              );
+            }
+          });
+
+          console.log("All headers inserted successfully");
+        } catch (err) {
+          console.error("Unexpected error:", err);
         }
+      };
 
-        console.log("success: ");
-        
+      await postHeader(columnsList);
+    } catch (error) {
+      return NextResponse.json(
+        { error: "Faild to create | Fetch id | insert header board" },
+        { status: 500 }
+      );
+    }
 
-        const id = addTask.boardid;
-        console.log(id);
-
-        const postHeader = async(columnsList)=>{
-          for(const header of columnsList){
-            const {data:headers , error:headersError} = await supabase.from("headers").insert([{headername:header, boardid:id}]);
-
-            
-        if(headersError){
-          console.log(headersError);
-        }else{console.log("Header inseterd successfully");}
-          }
-        }
-
-        await postHeader(columnsList);
-
-        }
-        catch(error){
-            return NextResponse.json({error:"Faild to create | Fetch id | insert header board"}, {status: 500});
-        }
-
-
-        onChange(false);
-        newElem(boardName);
-
-
+    onChange(false);
+    newElem(boardName);
   }
 
   return (
@@ -93,7 +105,9 @@ export default function AddNewBoard({ open, onChange, newElem }) {
             type="text"
             className="w-full text-body-l p-2 border-2 border-[var(--color-lineinput)] bg-[var(--color-dialog)] rounded-md"
             placeholder="eg: Web Design"
-            onChange={(e)=>{setBoardName(e.target.value)}}
+            onChange={(e) => {
+              setBoardName(e.target.value);
+            }}
           ></input>
           <br />
           <label className="text-body-m text-medium-grey">Cloumns</label>
@@ -123,9 +137,10 @@ export default function AddNewBoard({ open, onChange, newElem }) {
             className="w-full"
             textColor={"text-main-purple"}
             bgColor={"bg-lines-light"}
-            onClickFun={(e)=>{
+            onClickFun={(e) => {
               e.preventDefault();
-              addToList();}}
+              addToList();
+            }}
           >
             +Add New Cloumn
           </Button>

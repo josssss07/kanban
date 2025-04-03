@@ -33,7 +33,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
       }
     };
     fetchData();
-  }, [newElem, boardDetails.change]);
+  }, [newElem]);
 
   useEffect(() => {
     if (boardDetails?.id) {

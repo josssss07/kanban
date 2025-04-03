@@ -4,17 +4,13 @@ import supabase from "../supabaseclient";
 
 export const BoardContext = createContext();
 
-export default function AllBoards({ children }) {
+export default function AllBoards({userid , children }) {
   const [boards, setBoards] = useState();
 
   useEffect(() => {
     async function callInitialBoard() {
       try {
-        const {data:boardData , error:boardError} = await supabase.from("boards").select("*").eq("userid" , 1);
-        //(
-          //`${process.env.NEXT_PUBLIC_API_URL}/api/routes`,
-          //{ cache: "no-store" }
-        //);
+        const {data:boardData , error:boardError} = await supabase.from("boards").select("*").eq("userid" , userid);
         if (boardError) {
           throw new Error("failed to fetch board");
         }
