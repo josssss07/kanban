@@ -7,6 +7,8 @@ import Month from './components/month';
 import GlobalContext from './context/GlobalContext';
 import { createClient } from '@/utils/supabase/server';
 import EventModal from './components/EventModal';
+import CreateEventButton from './components/CreateEventButtton';
+
 const Calendar = () => {
 
  
@@ -32,7 +34,15 @@ const Calendar = () => {
     <div className="h-screen flex flex-col">
       <CalendarHeader />
       <div className="flex flex-1">
-        <Sidebar />
+        {/* Sidebar is hidden on mobile */}
+        <div className="hidden sm:block">
+          <Sidebar />
+        </div>
+        
+        <div className="sm:hidden fixed bottom-5 right-5 z-50">
+          <CreateEventButton />
+        </div>
+
         <Month month={currenMonth} />
       </div>
     </div>
