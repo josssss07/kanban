@@ -17,7 +17,7 @@ export default function AllContext({user, children }) {
     change: true,
     newBoard: false,
   });
-  const [displayNav, setDisplayNav] = useState(false);
+  const [displayNav, setDisplayNav] = useState(true);
   
 
   useEffect(() => {

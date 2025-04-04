@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { Menu, ClipboardList, Notebook, Inbox, CalendarDays, User, LogOut, Timer, Bookmark } from "lucide-react";
 import { logout } from "./action";
 import PomodoroPage from "./Pomodoro/page";
@@ -7,19 +7,24 @@ import Calendar from "./Calendar/page";
 import ContextWrapper from "./Calendar/context/ContextWrapperr";
 import Notes from "./Notes/page";
 import BookmarkManager from "./Bookmark/page";
+import { useRouter } from "next/navigation";
+import useStore from "@/app/global";
 
-// Create content components for each page(temp)
-const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
 
 export default function Dashboard({ user }) {
-
+  const setUser = useStore((state) => state.setUser);
+  const router = useRouter();
+  useEffect(() => {
+    if (user) setUser(user); // will persist it to localStorage
+  }, [user, setUser]);
+  
   const [isOpen, setIsOpen] = useState(true);
-  const [currentPage, setCurrentPage] = useState("boards"); // Default page
+  const [currentPage, setCurrentPage] = useState("calendar"); // Default page
   const [isMobileOpen, setIsMobileOpen] = useState(false); // State for mobile sidebar
 
   // Page content mapping
   const pageContent = {
-    boards: <BoardsContent />,
+    boards: '/',
     calendar: <ContextWrapper><Calendar/></ContextWrapper>,
     notebook: <Notes></Notes>,
     bookmark:<BookmarkManager></BookmarkManager>,
@@ -63,7 +68,7 @@ export default function Dashboard({ user }) {
 
         {/* Navigation Links */}
         <nav className="space-y-2">
-          <SidebarItem icon={<ClipboardList size={20} />} text="Boards" isOpen={isOpen || isMobileOpen} isActive={currentPage === "boards"} onClick={() => { setCurrentPage("boards"); setIsMobileOpen(false); }} />
+          <SidebarItem icon={<ClipboardList size={20} />} text="Boards" isOpen={isOpen || isMobileOpen} isActive={currentPage === "boards"} onClick={() => {router.push("/Boards");  setIsMobileOpen(false); }} />
           <SidebarItem icon={<CalendarDays size={20} />} text="Calendar" isOpen={isOpen || isMobileOpen} isActive={currentPage === "calendar"} onClick={() => { setCurrentPage("calendar"); setIsMobileOpen(false); }} />
           <SidebarItem icon={<Notebook size={20} />} text="Notebook" isOpen={isOpen || isMobileOpen} isActive={currentPage === "notebook"} onClick={() => { setCurrentPage("notebook"); setIsMobileOpen(false); }} />
           <SidebarItem icon={<Bookmark size={20} />} text="Bookmark" isOpen={isOpen || isMobileOpen} isActive={currentPage === "bookmark"} onClick={() => { setCurrentPage("bookmark"); setIsMobileOpen(false); }} />
