@@ -8,17 +8,28 @@ const FOLDERS_KEY = 'bookmark_folders';
 const getInitialFolders = () => {
   if (typeof window === 'undefined') return [];
   
-  const storedFolders = localStorage.getItem(FOLDERS_KEY);
-  return storedFolders ? JSON.parse(storedFolders) : [];
+  try {
+    const storedFolders = localStorage.getItem(FOLDERS_KEY);
+    return storedFolders ? JSON.parse(storedFolders) : [];
+  } catch (error) {
+    console.error('Error retrieving folders from localStorage:', error);
+    return [];
+  }
 };
 
 // Save folders to localStorage
 const saveFolders = (folders) => {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(FOLDERS_KEY, JSON.stringify(folders));
   
-  // Supabase implementation would go here
-  // saveFoldersToSupabase(folders);
+  try {
+    localStorage.setItem(FOLDERS_KEY, JSON.stringify(folders));
+    // Uncomment the following line to sync with Supabase
+    // saveFoldersToSupabase(folders);
+    return true;
+  } catch (error) {
+    console.error('Error saving folders to localStorage:', error);
+    return false;
+  }
 };
 
 // ===== FOLDER OPERATIONS =====
@@ -32,6 +43,7 @@ export const createFolder = (folderName) => {
     name: folderName,
     bookmarks: [],
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   
   const updatedFolders = [...folders, newFolder];
@@ -84,6 +96,7 @@ export const addBookmark = (folderId, bookmarkData) => {
     id: uuidv4(),
     ...bookmarkData,
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   
   const updatedFolders = folders.map(folder => {
@@ -109,12 +122,20 @@ export const updateBookmark = (folderId, bookmarkId, updatedData) => {
     if (folder.id === folderId) {
       const updatedBookmarks = folder.bookmarks.map(bookmark => {
         if (bookmark.id === bookmarkId) {
-          return { ...bookmark, ...updatedData, updatedAt: new Date().toISOString() };
+          return { 
+            ...bookmark, 
+            ...updatedData, 
+            updatedAt: new Date().toISOString() 
+          };
         }
         return bookmark;
       });
       
-      return { ...folder, bookmarks: updatedBookmarks, updatedAt: new Date().toISOString() };
+      return { 
+        ...folder, 
+        bookmarks: updatedBookmarks, 
+        updatedAt: new Date().toISOString() 
+      };
     }
     return folder;
   });
@@ -142,6 +163,129 @@ export const deleteBookmark = (folderId, bookmarkId) => {
   
   saveFolders(updatedFolders);
   return true;
+};
+
+// Move a bookmark to a different folder
+export const moveBookmark = (sourceFolderId, targetFolderId, bookmarkId) => {
+  const folders = getInitialFolders();
+  
+  // Find the bookmark to move
+  const sourceFolder = folders.find(folder => folder.id === sourceFolderId);
+  if (!sourceFolder) return false;
+  
+  const bookmarkToMove = sourceFolder.bookmarks.find(bookmark => bookmark.id === bookmarkId);
+  if (!bookmarkToMove) return false;
+  
+  // Update the bookmark with a new moved timestamp
+  const updatedBookmark = {
+    ...bookmarkToMove,
+    updatedAt: new Date().toISOString(),
+    movedAt: new Date().toISOString()
+  };
+  
+  // Create new folders array with the bookmark moved
+  const updatedFolders = folders.map(folder => {
+    if (folder.id === sourceFolderId) {
+      // Remove from source folder
+      return {
+        ...folder,
+        bookmarks: folder.bookmarks.filter(b => b.id !== bookmarkId),
+        updatedAt: new Date().toISOString()
+      };
+    } else if (folder.id === targetFolderId) {
+      // Add to target folder
+      return {
+        ...folder,
+        bookmarks: [...folder.bookmarks, updatedBookmark],
+        updatedAt: new Date().toISOString()
+      };
+    }
+    return folder;
+  });
+  
+  saveFolders(updatedFolders);
+  return true;
+};
+
+// Export all bookmarks as JSON
+export const exportBookmarks = () => {
+  const folders = getInitialFolders();
+  return JSON.stringify(folders, null, 2);
+};
+
+// Import bookmarks from JSON
+export const importBookmarks = (jsonData) => {
+  try {
+    const importedFolders = JSON.parse(jsonData);
+    
+    // Validate the imported data (basic validation)
+    if (!Array.isArray(importedFolders)) {
+      throw new Error('Invalid bookmarks data format');
+    }
+    
+    // Save to local storage
+    saveFolders(importedFolders);
+    return true;
+  } catch (error) {
+    console.error('Error importing bookmarks:', error);
+    return false;
+  }
+};
+
+// Initialize with sample data if empty
+export const initializeWithSampleData = () => {
+  const folders = getInitialFolders();
+  
+  // Only initialize if empty
+  if (folders.length === 0) {
+    const sampleFolders = [
+      {
+        id: uuidv4(),
+        name: "Development",
+        bookmarks: [
+          {
+            id: uuidv4(),
+            title: "GitHub",
+            url: "https://github.com",
+            description: "Code hosting platform",
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          },
+          {
+            id: uuidv4(),
+            title: "Stack Overflow",
+            url: "https://stackoverflow.com",
+            description: "Developer Q&A site",
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+        ],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      },
+      {
+        id: uuidv4(),
+        name: "News",
+        bookmarks: [
+          {
+            id: uuidv4(),
+            title: "HackerNews",
+            url: "https://news.ycombinator.com",
+            description: "Tech news aggregator",
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+        ],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ];
+    
+    saveFolders(sampleFolders);
+    return sampleFolders;
+  }
+  
+  return folders;
 };
 
 // ===== SUPABASE IMPLEMENTATION (COMMENTED OUT) =====
@@ -297,26 +441,4 @@ export const initFromSupabase = async () => {
           title: bookmark.title,
           url: bookmark.url,
           description: bookmark.description,
-          createdAt: bookmark.created_at,
-          updatedAt: bookmark.updated_at
-        }));
-      
-      return {
-        id: folder.id,
-        name: folder.name,
-        bookmarks: folderBookmarks,
-        createdAt: folder.created_at,
-        updatedAt: folder.updated_at
-      };
-    });
-    
-    // Save to local storage
-    localStorage.setItem(FOLDERS_KEY, JSON.stringify(formattedFolders));
-    
-    return formattedFolders;
-  } catch (error) {
-    console.error('Error initializing from Supabase:', error);
-    return getInitialFolders();
-  }
-};
-*/
+          createdAt: bookmark.create*/

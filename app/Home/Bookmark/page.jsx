@@ -1,15 +1,22 @@
 'use client';
 import dayjs from 'dayjs';
 import React, { useState, useEffect } from 'react';
-
-
+import {
+  getAllFolders,
+  createFolder,
+  updateFolder,
+  deleteFolder,
+  addBookmark,
+  updateBookmark,
+  deleteBookmark
+} from "./utils/bookmarkfunc";
 
 // Modal component for adding/editing folders and bookmarks
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
   
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-transparent bg-opacity-70 flex items-center justify-center z-50">
       <div className="bg-gray-900 rounded-lg w-full max-w-md p-6 border border-purple-500">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-white">{title}</h2>
@@ -17,7 +24,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             onClick={onClose}
             className="text-gray-300 hover:text-white"
           >
-            ✕
+            ✕ 
           </button>
         </div>
         {children}
@@ -284,103 +291,6 @@ const BookmarkFolderView = ({
   </div>
 );
 
-// Mock bookmark service for demo purposes
-const mockBookmarkService = () => {
-  let nextId = 1;
-  
-  const generateId = () => {
-    return nextId++;
-  };
-  
-  let folders = [
-    {
-      id: generateId(),
-      name: "Development",
-      bookmarks: [
-        {
-          id: generateId(),
-          title: "GitHub",
-          url: "https://github.com",
-          description: "Code hosting platform"
-        },
-        {
-          id: generateId(),
-          title: "Stack Overflow",
-          url: "https://stackoverflow.com",
-          description: "Developer Q&A site"
-        }
-      ]
-    },
-    {
-      id: generateId(),
-      name: "News",
-      bookmarks: [
-        {
-          id: generateId(),
-          title: "HackerNews",
-          url: "https://news.ycombinator.com",
-          description: "Tech news aggregator"
-        }
-      ]
-    }
-  ];
-  
-  return {
-    getAllFolders: () => folders,
-    createFolder: (name) => {
-      const newFolder = { id: generateId(), name, bookmarks: [] };
-      folders.push(newFolder);
-      return newFolder;
-    },
-    updateFolder: (id, data) => {
-      folders = folders.map(folder => 
-        folder.id === id ? { ...folder, ...data } : folder
-      );
-      return folders.find(folder => folder.id === id);
-    },
-    deleteFolder: (id) => {
-      folders = folders.filter(folder => folder.id !== id);
-    },
-    addBookmark: (folderId, data) => {
-      const newBookmark = { id: generateId(), ...data };
-      folders = folders.map(folder => {
-        if (folder.id === folderId) {
-          return {
-            ...folder,
-            bookmarks: [...folder.bookmarks, newBookmark]
-          };
-        }
-        return folder;
-      });
-      return newBookmark;
-    },
-    updateBookmark: (folderId, bookmarkId, data) => {
-      folders = folders.map(folder => {
-        if (folder.id === folderId) {
-          return {
-            ...folder,
-            bookmarks: folder.bookmarks.map(bookmark => 
-              bookmark.id === bookmarkId ? { ...bookmark, ...data } : bookmark
-            )
-          };
-        }
-        return folder;
-      });
-    },
-    deleteBookmark: (folderId, bookmarkId) => {
-      folders = folders.map(folder => {
-        if (folder.id === folderId) {
-          return {
-            ...folder,
-            bookmarks: folder.bookmarks.filter(bookmark => bookmark.id !== bookmarkId)
-          };
-        }
-        return folder;
-      });
-    }
-  };
-};
-
 const BookmarkManager = () => {
   const [folders, setFolders] = useState([]);
   const [currentFolder, setCurrentFolder] = useState(null);
@@ -391,19 +301,16 @@ const BookmarkManager = () => {
   const [bookmarkModalOpen, setBookmarkModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   
-  // Initialize mock service
-  const bookmarkService = React.useMemo(() => mockBookmarkService(), []);
-  
   // Load folders on mount
   useEffect(() => {
     const loadFolders = () => {
-      const allFolders = bookmarkService.getAllFolders();
+      const allFolders = getAllFolders();
       setFolders(allFolders);
       setIsLoading(false);
     };
     
     loadFolders();
-  }, [bookmarkService]);
+  }, []);
   
   // === Folder operations ===
   const handleOpenFolder = (folderId) => {
@@ -423,7 +330,7 @@ const BookmarkManager = () => {
   
   const handleDeleteFolder = (folderId) => {
     if (window.confirm('Are you sure you want to delete this folder and all its bookmarks?')) {
-      bookmarkService.deleteFolder(folderId);
+      deleteFolder(folderId);
       setFolders(folders.filter(folder => folder.id !== folderId));
     }
   };
@@ -431,13 +338,18 @@ const BookmarkManager = () => {
   const handleFolderSubmit = (formData) => {
     if (currentItem) {
       // Update existing folder
-      const updatedFolder = bookmarkService.updateFolder(currentItem.id, formData);
+      const updatedFolder = updateFolder(currentItem.id, formData);
       setFolders(folders.map(folder => 
-        folder.id === currentItem.id ? { ...folder, ...updatedFolder } : folder
+        folder.id === currentItem.id ? updatedFolder : folder
       ));
+      
+      // If the current folder is open, update it as well
+      if (currentFolder && currentFolder.id === currentItem.id) {
+        setCurrentFolder(updatedFolder);
+      }
     } else {
       // Create new folder
-      const newFolder = bookmarkService.createFolder(formData.name);
+      const newFolder = createFolder(formData.name);
       setFolders([...folders, newFolder]);
     }
     setFolderModalOpen(false);
@@ -456,73 +368,35 @@ const BookmarkManager = () => {
   
   const handleDeleteBookmark = (bookmarkId) => {
     if (window.confirm('Are you sure you want to delete this bookmark?')) {
-      bookmarkService.deleteBookmark(currentFolder.id, bookmarkId);
+      deleteBookmark(currentFolder.id, bookmarkId);
       
-      // Update the current folder in state
-      setCurrentFolder({
-        ...currentFolder,
-        bookmarks: currentFolder.bookmarks.filter(bookmark => bookmark.id !== bookmarkId)
-      });
+      // Refresh the folders state to get the updated data
+      const updatedFolders = getAllFolders();
+      setFolders(updatedFolders);
       
-      // Update folders state
-      setFolders(folders.map(folder => {
-        if (folder.id === currentFolder.id) {
-          return {
-            ...folder,
-            bookmarks: folder.bookmarks.filter(bookmark => bookmark.id !== bookmarkId)
-          };
-        }
-        return folder;
-      }));
+      // Update the current folder
+      const updatedFolder = updatedFolders.find(folder => folder.id === currentFolder.id);
+      setCurrentFolder(updatedFolder);
     }
   };
   
   const handleBookmarkSubmit = (formData) => {
     if (currentItem) {
       // Update existing bookmark
-      bookmarkService.updateBookmark(currentFolder.id, currentItem.id, formData);
-      
-      // Update the current folder in state
-      setCurrentFolder({
-        ...currentFolder,
-        bookmarks: currentFolder.bookmarks.map(bookmark => 
-          bookmark.id === currentItem.id ? { ...bookmark, ...formData } : bookmark
-        )
-      });
-      
-      // Update folders state
-      setFolders(folders.map(folder => {
-        if (folder.id === currentFolder.id) {
-          return {
-            ...folder,
-            bookmarks: folder.bookmarks.map(bookmark => 
-              bookmark.id === currentItem.id ? { ...bookmark, ...formData } : bookmark
-            )
-          };
-        }
-        return folder;
-      }));
+      updateBookmark(currentFolder.id, currentItem.id, formData);
     } else {
       // Add new bookmark
-      const newBookmark = bookmarkService.addBookmark(currentFolder.id, formData);
-      
-      // Update the current folder in state
-      setCurrentFolder({
-        ...currentFolder,
-        bookmarks: [...currentFolder.bookmarks, newBookmark]
-      });
-      
-      // Update folders state
-      setFolders(folders.map(folder => {
-        if (folder.id === currentFolder.id) {
-          return {
-            ...folder,
-            bookmarks: [...folder.bookmarks, newBookmark]
-          };
-        }
-        return folder;
-      }));
+      addBookmark(currentFolder.id, formData);
     }
+    
+    // Refresh the folders state to get the updated data
+    const updatedFolders = getAllFolders();
+    setFolders(updatedFolders);
+    
+    // Update the current folder
+    const updatedFolder = updatedFolders.find(folder => folder.id === currentFolder.id);
+    setCurrentFolder(updatedFolder);
+    
     setBookmarkModalOpen(false);
   };
   
