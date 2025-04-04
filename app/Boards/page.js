@@ -15,7 +15,7 @@ export default function BoardContent() {
     if (boardid) {
       redirect(`/Boards/${boardid}`);
     } else {
-      console.log("Loading");
+      redirect(`/Boards/0`);
     }
   }, [Boards]);
 }

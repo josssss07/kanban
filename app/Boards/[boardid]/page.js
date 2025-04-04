@@ -58,39 +58,41 @@ export default function Board() {
 
 
   return (
-    <div className="flex">
-      {headers == undefined ? (
-        <div>Loading</div>
-      ) : (
-        headers.map((header, index) => {
-          return (
-            <div
-              className=" overflow-y-auto max-h-[90vh]"
-              key={header.headerid}
-            >
-              <div className="text-medium-grey p-2">
-                <div className="p-1 text-body-l">
-                  {header.headername} (
-                  {tasks == undefined ? 0 : tasks[index]?.data?.length})
-                </div>
-                {tasks == undefined ? (
-                  <div>Loading</div>
-                ) : (
-                  <IndividualTask
-                    tasks={tasks[index]?.data}
-                    key={Math.random()}
-                    status={header.headername}
-                  />
-                )}
+    <div className="flex">{params.boardid==0?(<div className="">Dummy</div>):
+      (headers == undefined ? (
+      <div>Loading</div>
+    ) : (
+      headers.map((header, index) => {
+        return (
+          <div
+            className=" overflow-y-auto max-h-[90vh]"
+            key={header.headerid}
+          >
+            <div className="text-medium-grey p-2">
+              <div className="p-1 text-body-l">
+                {header.headername} (
+                {tasks == undefined ? 0 : tasks[index]?.data?.length})
               </div>
+              {tasks == undefined ? (
+                <div>Loading</div>
+              ) : (
+                <IndividualTask
+                  tasks={tasks[index]?.data}
+                  key={Math.random()}
+                  status={header.headername}
+                />
+              )}
             </div>
-          );
-        })
-      )}
+          </div>
+        );
+      })
+    )
 
-      <div className="flex justify-center items-center bg-[rgba(var(--color-dialog), 1)] m-2 min-w-44">
-        <AddColumns></AddColumns>
-      </div>
+)}
+
+<div className="flex justify-center items-center bg-[rgba(var(--color-dialog), 1)] m-2 min-w-44">
+      <AddColumns></AddColumns>
     </div>
+          </div>
   );
 }

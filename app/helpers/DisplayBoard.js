@@ -26,21 +26,21 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
         setBoard(BoardData);
         setBoardDetails((prevBoard) => ({
           ...prevBoard,
-          name: BoardData[0].boardname,
-          id: BoardData[0].boardid,
+          name: BoardData[0]?.boardname,
+          id: BoardData[0]?.boardid,
         }));
       } catch (error) {
         throw new Error("Error fetching boards:", error);
       }
     };
     fetchData();
-  }, [newElem, boardDetails.newBoard]);
+  }, [newElem, boardDetails?.newBoard]);
 
   useEffect(() => {
     if (boardDetails?.id) {
       router.push(`/Boards/${boardDetails.id}`);
     }
-  }, [boardDetails.id]);
+  }, [boardDetails?.id]);
 
   function callAnotherBoard(param) {
     setBoardDetails((prev) => ({
@@ -60,7 +60,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
       </div>
       {board?.map((board) => (
         <PageSection
-          styles={"text-medium-grey"}
+          styles={"text-medium-grey w-full"}
           key={board.boardid}
           param={[board.boardid, board.boardname]}
           onChange={callAnotherBoard}

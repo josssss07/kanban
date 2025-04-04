@@ -72,7 +72,7 @@ export default function EyeOrNav() {
               ) : undefined}
             </div>
             
-            <PageSection onChange={()=>{router.push('/Home')}} className="bg-gray-800 hover:bg-purple-700 transition-colors duration-200 rounded-lg mx-4 my-2 py-2">
+            <PageSection onChange={()=>{router.push('/Home')}} styles=" bg-purple-700 transition-colors duration-200 rounded-lg mx-4 my-2 py-2">
               <span className="text-gray-200">Home</span>
             </PageSection>
             
