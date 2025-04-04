@@ -1,15 +1,30 @@
 'use client';
 import Head from "next/head";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import anime from 'animejs';
+import { createClient } from '@/utils/supabase/server';
 import Hero from "./components/ui/Hero";
 import Navbar from "./components/ui/Navbar";
 import Footer from "./components/ui/Footer";
 
 export default function Home() {
   const bgAnimationRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
+    // const checkUserSession = async () => {
+    //   const supabase = await createClient();
+    //   const { data: { session } } = await supabase.auth.getSession();
+
+    //   if (session) {
+    //     // Redirect to /Home if the user is logged in
+    //     router.push('/Home');
+    //   }
+    // };
+
+    // checkUserSession();
+
     // Background animation
     anime({
       targets: '.animated-bg',
@@ -50,7 +65,7 @@ export default function Home() {
       duration: 1200,
       delay: 900
     });
-  }, []);
+  }, [router]);
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
