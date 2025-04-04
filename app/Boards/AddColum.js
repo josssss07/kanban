@@ -34,7 +34,7 @@ export default function AddColumns() {
         bgColor="bg-none"
         textColor="text-medium-grey"
       >
-        +New Cloumn
+        +New Column
       </Button>
       {addColumn ? (
         <CustomDialog
@@ -50,7 +50,7 @@ export default function AddColumns() {
             </label>
             <input
               type="text"
-              className="w-full text-body-l p-2 border-2 border-[var(--color-lineinput)] bg-[var(--color-dialog)] rounded-md"
+              className="w-full p-2 border border-gray-700 bg-gray-800 text-white rounded"
               value={column.headername}
               onChange={(event) => {
                 setCloumn((prevHeader) => ({
@@ -62,7 +62,7 @@ export default function AddColumns() {
             <input
               type="submit"
               value="Submit"
-              className="text-white bg-main-purple rounded-full m-2 p-1 w-full"
+              className="text-white bg-purple-700 rounded-full m-2 p-1 w-fit"
               onClick={() => {
                 setNumOfCols(numOfCols + 1);
               }}

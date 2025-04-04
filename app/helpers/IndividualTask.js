@@ -11,7 +11,7 @@ export default function IndividualTask({ tasks, status }) {
         return (
           <button
             key={task?.taskid}
-            className="flex flex-col text-[var(--color-text)] p-3 bg-[var(--color-dialog)] m-2 w-64 rounded-md"
+            className="flex flex-col text-white p-3 bg-[#1f2638] m-2 w-64 rounded-md border-l-4 border-purple-600 text-left hover:bg-[#262d40] transition-colors"
             onClick={() => {
               setTask(task);
               setOpenDialog(!openDialog);

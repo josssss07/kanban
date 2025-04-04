@@ -3,90 +3,15 @@
 import React, { useState, useEffect } from "react";
 import EyeButton from "../components/ui/EyeButton";
 import NavBar from "../components/ui/NavBar/NavBarApp";
-import { Sun, Moon, EyeOff } from "react-feather";
-import { DisplayNavContext } from "../Home/AllContext";
 import { useContext } from "react";
+import { DisplayNavContext } from "../Home/AllContext";
 import AddNewBoard from "../Boards/AddNewBoard";
-import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
 import PageSection from "../components/ui/NavBar/PageSection";
 import { useRouter } from "next/navigation";
 
 export default function EyeOrNav() {
   const router = useRouter();
-  var colorVar;
-  const [colorTheme, setColorTheme] = useState(null);
-  useEffect(() => {
-    colorVar = window.localStorage.getItem("color-theme");
-    if (colorVar == null) {
-      colorVar = getComputedStyle(document.documentElement)
-        .getPropertyValue("--color-prefer")
-        .trim();
-    }
-    setColorTheme(colorVar);
-  }, []);
-
-  useEffect(() => {
-    toggleTheme();
-  }, [colorTheme]);
-
-  function toggleTheme() {
-    window.localStorage.setItem(
-      "color-theme",
-      colorTheme == null ? colorVar : colorTheme
-    );
-    if (colorTheme == "light") {
-      const color = Light_colors;
-      document.documentElement.style.setProperty("--color-prefer", '"light"');
-      document.documentElement.style.setProperty("--color-text", color.text);
-      document.documentElement.style.setProperty(
-        "--color-background",
-        color.background
-      );
-      document.documentElement.style.setProperty(
-        "--color-dialog",
-        color.dialog
-      );
-      document.documentElement.style.setProperty(
-        "--color-backgroundlighter",
-        color.backgroundlighter
-      );
-      document.documentElement.style.setProperty(
-        "--color-lineborder",
-        color.lineborder
-      );
-      document.documentElement.style.setProperty(
-        "--color-lineinput",
-        color.lineinput
-      );
-    } else if (colorTheme == "dark") {
-      const color = Dark_colors;
-      document.documentElement.style.setProperty("--color-prefer", '"light"');
-      document.documentElement.style.setProperty("--color-text", color.text);
-      document.documentElement.style.setProperty(
-        "--color-background",
-        color.background
-      );
-      document.documentElement.style.setProperty(
-        "--color-dialog",
-        color.dialog
-      );
-      document.documentElement.style.setProperty(
-        "--color-backgroundlighter",
-        color.backgroundlighter
-      );
-      document.documentElement.style.setProperty(
-        "--color-lineborder",
-        color.lineborder
-      );
-      document.documentElement.style.setProperty(
-        "--color-lineinput",
-        color.lineinput
-      );
-    } else {
-      console.log("null");
-    }
-  }
   const [displayNav, setDisplayNav] = useContext(DisplayNavContext);
   const [newBoard, setNewBoard] = useState({
     state: false,
@@ -100,6 +25,7 @@ export default function EyeOrNav() {
       state: newstate,
     }));
   }
+  
   function setNewElem(element) {
     setNewBoard((prevBoard) => ({
       ...prevBoard,
@@ -113,6 +39,7 @@ export default function EyeOrNav() {
       newElem: undefined,
     }));
   }
+  
   function setDisplay() {
     setDisplayNav(!displayNav);
   }
@@ -121,55 +48,46 @@ export default function EyeOrNav() {
     <>
       {displayNav === true ? (
         <NavBar clickBun={setDisplay}>
-          <div className="flex flex-col h-full">
-            <div className="h-16 flex justify-center items-center text-heading-xl">
+          <div className="flex flex-col h-full bg-gray-900">
+            <div className="h-16 flex justify-center items-center text-heading-xl text-purple-400 font-bold">
               kanban
             </div>
 
-            <DisplayBoards
-              state={newBoard.state}
-              stateChange={setBoard}
-              newElem={newBoard.newElem}
-              setElemUndefined={setElemUndefined}
-            />
-
-            {newBoard.state ? (
-              <AddNewBoard
-                open={newBoard}
-                onChange={setBoard}
-                newElem={setNewElem}
+            <div className="px-4 py-2">
+              <h2 className="text-gray-400 uppercase text-sm tracking-wider mb-3 ml-2"></h2>
+              
+              <DisplayBoards
+                state={newBoard.state}
+                stateChange={setBoard}
+                newElem={newBoard.newElem}
+                setElemUndefined={setElemUndefined}
               />
-            ) : undefined}
-            <PageSection onChange={()=>{router.push('/Home')}}>Home</PageSection>
-            <div className="mt-auto">
-              <div className="flex justify-center gap-6 items-center">
-                <div className="flex w-full mx-2 gap-6 bg-[var(--color-backgroundlighter)] p-2">
-                  <Sun fill={"grey"} style={{ stroke: "grey" }} size={20} />
-                  <div className="m-0 p-1 flex bg-main-purple rounded-full">
-                    <label className="relative inline-block w-[55px] h-[24px]">
-                      <input
-                        type="checkbox"
-                        className=" w-0 h-0 peer"
-                        onChange={() => {
-                          colorTheme == "light"
-                            ? setColorTheme("dark")
-                            : setColorTheme("light");
-                        }}
-                      />
-                      <div className="absolute  top-0 left-0 right-0 bottom-0 cursor-pointer bg-white duration-[0.4s] w-[24px] rounded-full h-[24px] peer-checked:translate-x-8"></div>
-                    </label>
-                  </div>
-                  <Moon fill={"grey"} style={{ stroke: "grey" }} size={20} />
-                </div>
-              </div>
+
+              {newBoard.state ? (
+                <AddNewBoard
+                  open={newBoard}
+                  onChange={setBoard}
+                  newElem={setNewElem}
+                />
+              ) : undefined}
+            </div>
+            
+            <PageSection onChange={()=>{router.push('/Home')}} className="bg-gray-800 hover:bg-purple-700 transition-colors duration-200 rounded-lg mx-4 my-2 py-2">
+              <span className="text-gray-200">Home</span>
+            </PageSection>
+            
+            <div className="mt-auto mb-4">
               <button
-                className="flex m-3 ml-6"
+                className="flex items-center mx-6 py-2 px-4 rounded-lg text-gray-300 hover:text-purple-300 transition-colors"
                 onClick={() => {
                   setDisplayNav(!displayNav);
                 }}
               >
-                {/* <EyeOff style={{ stroke: "grey" }} size={19} />
-                <div className="text-medium-grey pl-3 ">Hide Sidebar</div> */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <div className="pl-3">Hide Sidebar</div>
               </button>
             </div>
           </div>
