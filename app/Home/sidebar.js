@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import { Menu, ClipboardList, Notebook, Inbox, CalendarDays, User, LogOut, Timer } from "lucide-react";
+import { Menu, ClipboardList, Notebook, Inbox, CalendarDays, User, LogOut, Timer, Bookmark } from "lucide-react";
 import { logout } from "./action";
 import PomodoroPage from "./Pomodoro/page";
 import Calendar from "./Calendar/page";
 import ContextWrapper from "./Calendar/context/ContextWrapperr";
 import Notes from "./Notes/page";
+import BookmarkManager from "./Bookmark/page";
 
 // Create content components for each page(temp)
 const BoardsContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Boards</h1><p>Your boards content goes here...</p></div>;
@@ -21,6 +22,7 @@ export default function Dashboard({ user }) {
     boards: <BoardsContent />,
     calendar: <ContextWrapper><Calendar/></ContextWrapper>,
     notebook: <Notes></Notes>,
+    bookmark:<BookmarkManager></BookmarkManager>,
     pomodoro: <PomodoroPage></PomodoroPage>
   };
 
@@ -64,6 +66,7 @@ export default function Dashboard({ user }) {
           <SidebarItem icon={<ClipboardList size={20} />} text="Boards" isOpen={isOpen || isMobileOpen} isActive={currentPage === "boards"} onClick={() => { setCurrentPage("boards"); setIsMobileOpen(false); }} />
           <SidebarItem icon={<CalendarDays size={20} />} text="Calendar" isOpen={isOpen || isMobileOpen} isActive={currentPage === "calendar"} onClick={() => { setCurrentPage("calendar"); setIsMobileOpen(false); }} />
           <SidebarItem icon={<Notebook size={20} />} text="Notebook" isOpen={isOpen || isMobileOpen} isActive={currentPage === "notebook"} onClick={() => { setCurrentPage("notebook"); setIsMobileOpen(false); }} />
+          <SidebarItem icon={<Bookmark size={20} />} text="Bookmark" isOpen={isOpen || isMobileOpen} isActive={currentPage === "bookmark"} onClick={() => { setCurrentPage("bookmark"); setIsMobileOpen(false); }} />
           <SidebarItem icon={<Timer size={20} />} text="Pomodoro" isOpen={isOpen || isMobileOpen} isActive={currentPage === "pomodoro"} onClick={() => { setCurrentPage("pomodoro"); setIsMobileOpen(false); }} />
         </nav>
 
