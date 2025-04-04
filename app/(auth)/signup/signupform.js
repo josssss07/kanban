@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -8,7 +9,9 @@ export default function SignupForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,14 +21,25 @@ export default function SignupForm() {
       setError('Passwords do not match');
       return;
     }
+
+    
+    setLoading(true);
     
     // Create form data to pass to the server action
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
+    formData.append('userName', username);
     
     // Call the signup server action
-    await signup(formData);
+    
+    try {
+      await signup(formData);
+    } catch (err) {
+      setError('Signup failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -106,7 +120,18 @@ export default function SignupForm() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>            
+              <div className="mb-4">
+              <label className="block text-gray-400 text-sm mb-2">Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Your username"
+                className="w-full px-3 py-2 bg-black border border-gray-700 rounded text-white focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
               <div className="mb-4">
                 <label className="block text-gray-400 text-sm mb-2" htmlFor="email">
                   Email
@@ -153,7 +178,7 @@ export default function SignupForm() {
                 type="submit"
                 className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded text-white font-medium transition duration-200"
               >
-                Create Account
+              {loading ? 'Signing up...' : 'Create Account'}
               </button>
             </form>
           </div>

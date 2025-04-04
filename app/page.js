@@ -68,7 +68,7 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-black  text-white overflow-hidden">
       <Head>
         <title>kanban - Boost Your Workflow</title>
         <meta name="description" content="Kanban productivity system" />
