@@ -126,7 +126,7 @@ export default function EditBoard({ open, onChange }) {
           <br />
           <input
             type="text"
-            className="w-full text-body-l p-2 border-2 border-[var(--color-lineinput)] rounded-md bg-[var(--color-dialog)]"
+            className="w-full text-body-l p-2 border-2 border-[var(--color-lineinput)] rounded-md bg-"
             value={boardDetails.name}
             placeholder={boardDetails.name}
             onChange={(event) => {

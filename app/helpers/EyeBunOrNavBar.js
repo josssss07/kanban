@@ -9,8 +9,11 @@ import { useContext } from "react";
 import AddNewBoard from "../Boards/AddNewBoard";
 import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
+import PageSection from "../components/ui/NavBar/PageSection";
+import { useRouter } from "next/navigation";
 
 export default function EyeOrNav() {
+  const router = useRouter();
   var colorVar;
   const [colorTheme, setColorTheme] = useState(null);
   useEffect(() => {
@@ -137,6 +140,7 @@ export default function EyeOrNav() {
                 newElem={setNewElem}
               />
             ) : undefined}
+            <PageSection onChange={()=>{router.push('/Home')}}>Home</PageSection>
             <div className="mt-auto">
               <div className="flex justify-center gap-6 items-center">
                 <div className="flex w-full mx-2 gap-6 bg-[var(--color-backgroundlighter)] p-2">
