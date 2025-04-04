@@ -8,17 +8,33 @@ import { login, signinWithGoogle } from './action';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(''); // Reset error message before making a request
+    setErrorMessage('');
+  
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
-    
-    const result = await login(formData);
-    if (result?.error) {
-      setErrorMessage(result.error);
+  
+    try {
+      const response = await login(formData);
+      console.log(response); // Debugging: Check what response you are getting
+  
+      if (response?.success) {
+        // Login successful, redirect user or show success message
+        window.location.href = "/dashboard"; // Change as needed
+      } else {
+        setError('Incorrect email or password. Please try again.');
+        setTimeout(() => setError(''), 3000);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -29,6 +45,7 @@ export default function Login() {
       setErrorMessage(result.error);
     }
   };
+  
 
   return (
     <div className="relative flex min-h-screen bg-black">
@@ -75,6 +92,14 @@ export default function Login() {
               </span>
             </div>
           </div>
+
+          {/* Error Message Section */}
+            {error && (
+              <div className="text-center bg-red-600 text-white px-4 py-2 mb-4 rounded-md shadow-md">
+                {error}
+              </div>
+            )
+            }
 
           {/* Login Form */}
           <div className="flex-grow">
@@ -143,13 +168,23 @@ export default function Login() {
                 />
               </div>
               <button
-                type="submit"
-                className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded text-white font-medium transition duration-200"
-              >
-                Sign In
-              </button>
+              type="submit"
+              className={`w-full py-2 px-4 flex items-center justify-center rounded text-white font-medium transition duration-200 ${isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'}`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="4" className="opacity-25" />
+                    <path fill="white" className="opacity-75" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z" />
+                  </svg>
+                  Signing In...
+                </>
+              ) : 'Sign In'}
+            </button>
             </form>
           </div>
+          
 
           {/* Footer */}
           <div className="mt-8">
