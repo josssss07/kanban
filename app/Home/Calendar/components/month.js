@@ -5,7 +5,7 @@ export default function Month({ month }) {
     const monthData = Array.isArray(month) ? month : [];
     
     return (
-      <div className="flex-1 grid grid-cols-7 grid-rows-5 rounded-2xl p-4 bg-gray-900">
+      <div className="flex-1 grid grid-cols-7 grid-rows-5  p-4 bg-gray-900">
         {monthData.map((row, i) => (
           <React.Fragment key={i}>
             {Array.isArray(row) ? row.map((day, idx) => (
