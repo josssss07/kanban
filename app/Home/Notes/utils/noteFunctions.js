@@ -64,21 +64,10 @@ export const createNote = async (noteData) => {
     
     // Supabase version (commented out)
     // const supabase = createClient();
-    // if (noteData.file) {
-    //   const fileExt = noteData.fileName.split('.').pop();
-    //   const filePath = `${id}.${fileExt}`;
-    //   const { error: uploadError } = await supabase.storage
-    //     .from('note-attachments')
-    //     .upload(filePath, noteData.file);
-    //   if (uploadError) throw uploadError;
-    //   noteData.filePath = filePath;
-    // }
     // const { data, error } = await supabase.from('notes').insert([{
     //   id,
     //   title: noteData.title,
     //   content: noteData.content,
-    //   file_name: noteData.fileName,
-    //   file_path: noteData.filePath,
     //   created_at: createdAt,
     //   updated_at: createdAt
     // }]).select();
@@ -108,7 +97,6 @@ export const updateNote = async (id, noteData) => {
       ...notes[noteIndex],
       title: noteData.title,
       content: noteData.content,
-      fileName: noteData.fileName,
       updatedAt: new Date().toISOString()
     };
     
@@ -117,20 +105,9 @@ export const updateNote = async (id, noteData) => {
     
     // Supabase version (commented out)
     // const supabase = createClient();
-    // let filePath = null;
-    // if (noteData.file) {
-    //   const fileExt = noteData.fileName.split('.').pop();
-    //   filePath = `${id}.${fileExt}`;
-    //   const { error: uploadError } = await supabase.storage
-    //     .from('note-attachments')
-    //     .upload(filePath, noteData.file, { upsert: true });
-    //   if (uploadError) throw uploadError;
-    // }
     // const { data, error } = await supabase.from('notes').update({
     //   title: noteData.title,
     //   content: noteData.content,
-    //   file_name: noteData.fileName,
-    //   file_path: filePath || undefined,
     //   updated_at: new Date().toISOString()
     // }).eq('id', id).select();
     // if (error) throw error;
@@ -156,12 +133,6 @@ export const deleteNote = async (id) => {
     
     // Supabase version (commented out)
     // const supabase = createClient();
-    // // Delete the file if it exists
-    // const { data } = await supabase.from('notes').select('file_path').eq('id', id).single();
-    // if (data && data.file_path) {
-    //   await supabase.storage.from('note-attachments').remove([data.file_path]);
-    // }
-    // // Delete the note
     // const { error } = await supabase.from('notes').delete().eq('id', id);
     // if (error) throw error;
     
