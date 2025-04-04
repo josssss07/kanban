@@ -3,8 +3,7 @@ import CustomDialog from "@/app/components/ui/Dialog.js";
 import Button from "@/app/components/ui/Button.js";
 import { NextResponse } from "next/server.js";
 import supabase from "@/app/supabaseclient";
-import { UserIdContext } from "@/app/helpers/BoardContext";
-import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
+import { UserIdContext , BoardDetailsContext } from "../Home/AllContext";
 
 export default function AddNewBoard({ open, onChange, newElem }) {
   const heightx = 400;
@@ -12,7 +11,7 @@ export default function AddNewBoard({ open, onChange, newElem }) {
   const [columnsList, setColumnList] = useState(["ToDo", "Doing"]);
   const [boardName, setBoardName] = useState(null);
   const [userid, setUserId] = useContext(UserIdContext);
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
 
   function removeFromList(itemToRemove) {
     setColumnList((prevItems) =>

@@ -1,8 +1,8 @@
 import CustomDialog from "@/app/components/ui/Dialog.js";
 import Button from "@/app/components/ui/Button.js";
-import { BoardNameContext } from "@/app/helpers/DisplayNavContext.js";
+import { BoardDetailsContext } from "../Home/AllContext";
 import { useContext } from "react";
-import { BoardContext } from "@/app/helpers/BoardContext.js";
+import { BoardsContext } from "../Home/AllContext";
 import supabase from "@/app/supabaseclient";
 
 export default function DeleteBoard({
@@ -10,11 +10,11 @@ export default function DeleteBoard({
   onChange,
   boardName = "Platform Launch",
 }) {
-  const [Board, setBoards] = useContext(BoardContext);
+  const [Board, setBoards] = useContext(BoardsContext);
   const heightx = 400;
   const heighty = 400;
 
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
 
   async function deleteBoard() {
     const { data: deletedBoard, error: deleteBoardError } = await supabase

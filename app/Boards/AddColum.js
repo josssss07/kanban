@@ -3,7 +3,7 @@ import CustomDialog from "@/app/components/ui/Dialog";
 import Button from "@/app/components/ui/Button";
 import React, { useContext } from "react";
 import insertNewHeader from "@/app/headers/CreateHeader";
-import { BoardDetailsContext } from "../AllContext";
+import { BoardDetailsContext } from "../Home/AllContext";
 
 export default function AddColumns() {
   const heightx = 400;

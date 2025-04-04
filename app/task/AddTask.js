@@ -1,7 +1,7 @@
 import CustomDialog from "../components/ui/Dialog.js";
 import { useContext, useEffect, useState } from "react";
 import supabase from "../supabaseclient.js";
-import { BoardNameContext } from "../helpers/DisplayNavContext.js";
+import { BoardDetailsContext } from "../Home/AllContext.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,7 +15,7 @@ export default function AddNewTask({ open, onChange }) {
   });
   const heighty = 600;
   const heightx = 400;
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   const [header, setHeaders] = useState([]);
 
   async function fetchData() {

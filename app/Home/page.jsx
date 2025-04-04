@@ -16,9 +16,6 @@ export default async function PrivatePage() {
     redirect('/login')
   }
   
-  // const setUser = useStore((state) => state.setUser);
-  
-  // setUser({id: data.user.id});
 
   return (
     <div>

@@ -1,7 +1,7 @@
 "use client";
 import CustomDialog from "@/app/components/ui/Dialog.js";
 import Button from "@/app/components/ui/Button.js";
-import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
+import { BoardDetailsContext } from "../Home/AllContext";
 import { useContext, useState, useEffect } from "react";
 import supabase from "@/app/supabaseclient";
 import DeleteHeader from "@/app/headers/DeleteHeader";
@@ -11,7 +11,7 @@ import insertNewHeader from "@/app/headers/CreateHeader";
 export default function EditBoard({ open, onChange }) {
   const heightx = 400;
   const heighty = 500;
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   const [headers, setHeaders] = useState([]);
   const [oldHeaders, setOldHeaders] = useState([]);
 

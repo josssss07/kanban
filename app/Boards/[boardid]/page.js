@@ -4,7 +4,7 @@ import AddColumns from "../AddColum";
 import { useState, useEffect, useContext } from "react";
 import supabase from "@/app/supabaseclient";
 import { useParams } from "next/navigation";
-import { BoardDetailsContext, DisplayNavContext } from "../../AllContext";
+import { BoardDetailsContext , DisplayNavContext } from "@/app/Home/AllContext";
 import useStore from "@/app/global";
 
 export default function Board() {

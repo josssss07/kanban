@@ -3,7 +3,7 @@
 import { createContext, React, useContext, useEffect, useState } from "react";
 import UnitElemDisplay from "../components/ui/UnitElemDisplay";
 import AppHeader from "../appheader/AppHeader";
-import { BoardContext } from "./BoardContext.js";
+import { BoardsContext } from "../Home/AllContext";
 import BoardContent from "../Home/BoardContent";
 
 export const DisplayNavContext = createContext();
@@ -11,7 +11,7 @@ export const BoardNameContext = createContext();
 
 export default function DisplayContext({ children }) {
   const [displayNav, setDisplayNav] = useState(false);
-  const [Board, setBoard] = useContext(BoardContext);
+  const [Board, setBoard] = useContext(BoardsContext);
   const [boardDetails, setBoardDetails] = useState({
     name: "Loading",
     id: 0,

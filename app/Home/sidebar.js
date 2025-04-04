@@ -6,8 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 import PomodoroPage from "./Pomodoro/page";
 import Calendar from "./Calendar/page";
 import ContextWrapper from "./Calendar/context/ContextWrapperr";
-import RootLayoutClient from "./RootLayout";
 import useStore from "../global";
+import { useRouter } from "next/navigation";
 // import BoardContent from "./BoardContent";
 
 // // Create content components for each page(temp)
@@ -15,20 +15,21 @@ import useStore from "../global";
 const NotebookContent = () => <div className="p-6"><h1 className="text-2xl font-bold mb-4">Notebook</h1><p>Your notebook content goes here...</p></div>;
 
 export default function Dashboard({ user }) {
+  const router = useRouter();
+
   const setUser = useStore((state) => state.setUser);
 
-  // ✅ Ensure Zustand store updates correctly
   useEffect(() => {
-    if (user) {
-      setUser(user); // ✅ Now this will work!
-    }
-  }, [user, setUser]); 
+    if (user) setUser(user); // will persist it to localStorage
+  }, [user, setUser]);
+
+
   const [isOpen, setIsOpen] = useState(true);
   const [currentPage, setCurrentPage] = useState("boards"); // Default page
 
   // Page content mapping
   const pageContent = {
-    boards: <RootLayoutClient/>,
+    boards: <></>,
     calendar: <ContextWrapper><Calendar/></ContextWrapper>,
     notebook: <NotebookContent />,
     pomodoro: <PomodoroPage></PomodoroPage>
@@ -68,7 +69,7 @@ export default function Dashboard({ user }) {
             text="Boards" 
             isOpen={isOpen} 
             isActive={currentPage === "boards"}
-            onClick={() => setCurrentPage("boards")} 
+            onClick={() => router.push("/Boards")} 
           />
           <SidebarItem 
             icon={<CalendarDays size={20} />} 

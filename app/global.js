@@ -19,22 +19,33 @@
 // }));
 
 // export default useStore;
-
 import { create } from "zustand";
 import supabase from "./supabaseclient";
 
 const useStore = create((set) => ({
   user: null,
 
-  // ✅ Correct way to set the user
-  setUser: (user) => set({ user }), 
+  setUser: (user) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+    set({ user });
+  },
 
-  // ✅ Corrected fetchUser function
+  loadUser: () => {
+    if (typeof window !== "undefined") {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (storedUser) set({ user: storedUser });
+    }
+  },
+
   fetchUser: async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    set({ user });  // ✅ Now correctly updates the Zustand store
-  }
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user)); // persist
+      set({ user });
+    }
+  },
 }));
 
 export default useStore;
-

@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { useEffect, useContext } from "react";
-import { BoardsContext } from "./AllContext";
+import { BoardsContext } from "../Home/AllContext";
 
 export default function BoardContent() {
   const [Boards, setBoards] = useContext(BoardsContext);
@@ -13,7 +13,7 @@ export default function BoardContent() {
       boardid = Boards[0]?.boardid;
     }
     if (boardid) {
-      redirect(`/Home/board/${boardid}`);
+      redirect(`/Boards/${boardid}`);
     } else {
       console.log("Loading");
     }

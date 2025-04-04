@@ -3,13 +3,12 @@ import { useRouter } from "next/navigation";
 //add suspense
 import PageSection from "../components/ui/NavBar/PageSection";
 import { useContext, useEffect, useState } from "react";
-import { BoardNameContext } from "./DisplayNavContext";
-import { UserIdContext } from "./BoardContext";
+import { BoardDetailsContext , UserIdContext } from "../Home/AllContext";
 import supabase from "../supabaseclient";
 
 export default function DisplayBoards({ state, stateChange, newElem }) {
   const [board, setBoard] = useState();
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   const [userId, setUserId] = useContext(UserIdContext);
 
   const router = useRouter();
@@ -39,7 +38,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
 
   useEffect(() => {
     if (boardDetails?.id) {
-      router.push(`/Home/board/${boardDetails.id}`);
+      router.push(`/Boards/${boardDetails.id}`);
     }
   }, [boardDetails.id]);
 
@@ -51,7 +50,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
       chnage: false,
     }));
 
-    router.push(`/Home/board/${param[0]}`);
+    router.push(`/Boards/${param[0]}`);
   }
 
   return (

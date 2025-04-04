@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import CustomDialog from "../components/ui/Dialog";
 import supabase from "../supabaseclient";
-import { BoardNameContext } from "../helpers/DisplayNavContext";
+import { BoardDetailsContext } from "../Home/AllContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function EditorDeletTaskForm({ open, onChange, task, status }) {
   const [header, setHeaders] = useState([]);
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   const [selectedStatus, setSelectedStatus] = useState(status);
   const [description, setDescription] = useState(task.taskdescription);
   const [startDate, setStartDate] = useState(new Date(task.startdate));

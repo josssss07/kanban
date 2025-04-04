@@ -5,13 +5,13 @@ import { MoreVertical } from "react-feather";
 import UnitElemDisplay from "../components/ui/UnitElemDisplay";
 import { useContext, useState } from "react";
 import AddNewTask from "../task/AddTask";
-import ChangeOptionBoard from "../Home/board/ChangeBoard";
-import { BoardNameContext } from "../helpers/DisplayNavContext";
+import ChangeOptionBoard from "../Boards/ChangeBoard";
+import { BoardDetailsContext } from "../Home/AllContext";
 
 export default function AppHeader() {
   const [addTaskDialog, setAddTaskDialog] = useState(false);
   const [changeBoard, setChangeBoard] = useState(false);
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   console.log(boardDetails + " details");
 
   function addNewTask() {

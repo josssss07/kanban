@@ -6,7 +6,7 @@ import NavBar from "../components/ui/NavBar/NavBarApp";
 import { Sun, Moon, EyeOff } from "react-feather";
 import { DisplayNavContext } from "../Home/AllContext";
 import { useContext } from "react";
-import AddNewBoard from "../Home/board/AddNewBoard";
+import AddNewBoard from "../Boards/AddNewBoard";
 import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
 

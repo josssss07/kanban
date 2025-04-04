@@ -1,4 +1,4 @@
-import { DisplayNavContext } from "../helpers/DisplayNavContext";
+import { DisplayNavContext } from "../Home/AllContext";
 import { useContext } from "react";
 
 export default function Header({ children }) {
