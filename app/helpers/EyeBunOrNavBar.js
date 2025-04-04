@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import EyeButton from "../components/ui/EyeButton";
 import NavBar from "../components/ui/NavBar/NavBarApp";
 import { Sun, Moon, EyeOff } from "react-feather";
-import { DisplayNavContext } from "./DisplayNavContext";
+import { DisplayNavContext } from "../Home/AllContext";
 import { useContext } from "react";
-import AddNewBoard from "../home/board/AddNewBoard";
+import AddNewBoard from "../Home/board/AddNewBoard";
 import { Light_colors, Dark_colors } from "../constants";
 import DisplayBoards from "./DisplayBoard";
 
@@ -164,8 +164,8 @@ export default function EyeOrNav() {
                   setDisplayNav(!displayNav);
                 }}
               >
-                <EyeOff style={{ stroke: "grey" }} size={19} />
-                <div className="text-medium-grey pl-3 ">Hide Sidebar</div>
+                {/* <EyeOff style={{ stroke: "grey" }} size={19} />
+                <div className="text-medium-grey pl-3 ">Hide Sidebar</div> */}
               </button>
             </div>
           </div>

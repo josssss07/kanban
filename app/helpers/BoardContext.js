@@ -12,7 +12,7 @@ export default function AllBoards({ userId, initialBoards, children }) {
 
   useEffect(() => {
     if (boards?.length > 0) {
-      router.push(`/home/board/${boards[0].boardid}`);
+      router.push(`/Home/board/${boards[0].boardid}`);
     }
   }, [boards, router]);
 

@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation'
-import { logout } from './action'
+import { logout } from './action';
 import { createClient } from '@/utils/supabase/server'
 import Sidebar from './sidebar';
-
+import AllContext from './AllContext';
+import useStore from '../global';
 
 
 export default async function PrivatePage() {
@@ -14,16 +15,18 @@ export default async function PrivatePage() {
   if (error || !data?.user) {
     redirect('/login')
   }
-
+  
+  // const setUser = useStore((state) => state.setUser);
+  
+  // setUser({id: data.user.id});
 
   return (
-    // <div>
-    //   <Sidebar user={data.user}></Sidebar>
-      
-    // </div>
-    <>
-    <RootLayout userid={data.user.id}/>
-    </>
+    <div>
+      <AllContext user = {data.user}>
+      <Sidebar user={data.user}></Sidebar>
+      </AllContext>
+    </div>
+
 
   );
 }

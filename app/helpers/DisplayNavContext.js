@@ -4,6 +4,7 @@ import { createContext, React, useContext, useEffect, useState } from "react";
 import UnitElemDisplay from "../components/ui/UnitElemDisplay";
 import AppHeader from "../appheader/AppHeader";
 import { BoardContext } from "./BoardContext.js";
+import BoardContent from "../Home/BoardContent";
 
 export const DisplayNavContext = createContext();
 export const BoardNameContext = createContext();
@@ -18,14 +19,22 @@ export default function DisplayContext({ children }) {
     newBoard: false,
   });
   useEffect(() => {
+    console.log(Board[0].boardname);
     if (Board) {
       setBoardDetails((prevBoard) => ({
         ...prevBoard,
         name: Board[0].boardname,
         id: Board[0].boardid,
       }));
+      
+    console.log(boardDetails);
     }
   }, [Board]);
+
+
+  useEffect(()=>{
+    console.log(boardDetails)
+  },[boardDetails])
 
   return (
     <DisplayNavContext.Provider value={[displayNav, setDisplayNav]}>

@@ -3,7 +3,7 @@ import CustomDialog from "@/app/components/ui/Dialog";
 import Button from "@/app/components/ui/Button";
 import React, { useContext } from "react";
 import insertNewHeader from "@/app/headers/CreateHeader";
-import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
+import { BoardDetailsContext } from "../AllContext";
 
 export default function AddColumns() {
   const heightx = 400;
@@ -15,7 +15,7 @@ export default function AddColumns() {
   const [addColumn, setAddColumn] = React.useState(false);
   const [numOfCols, setNumOfCols] = React.useState(0);
   const [column, setCloumn] = React.useState({ headername: "eg: To do" });
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
 
   async function handleSubmit(e) {
     e.preventDefault();

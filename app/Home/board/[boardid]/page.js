@@ -4,14 +4,19 @@ import AddColumns from "../AddColum";
 import { useState, useEffect, useContext } from "react";
 import supabase from "@/app/supabaseclient";
 import { useParams } from "next/navigation";
-import { BoardNameContext } from "@/app/helpers/DisplayNavContext";
+import { BoardDetailsContext, DisplayNavContext } from "../../AllContext";
+import useStore from "@/app/global";
 
 export default function Board() {
   const params = useParams();
 
   const [headers, setHeaders] = useState();
   const [tasks, setTasks] = useState();
-  const [boardDetails, setBoardDetails] = useContext(BoardNameContext);
+  console.log("DisplayNavContext:", useContext(DisplayNavContext));
+  console.log("BoardDetailsContext:", useContext(BoardDetailsContext));
+  
+  const [id, setId] = useContext(DisplayNavContext);
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,6 +28,7 @@ export default function Board() {
           throw new Error("failed to fetch headers");
         }
         setHeaders(headerData);
+        console.log(headerData);
 
         const promise = headerData.map(async (header) => {
           const { data: taskData, error: taskError } = await supabase

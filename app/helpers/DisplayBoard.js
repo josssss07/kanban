@@ -39,7 +39,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
 
   useEffect(() => {
     if (boardDetails?.id) {
-      router.push(`/home/board/${boardDetails.id}`);
+      router.push(`/Home/board/${boardDetails.id}`);
     }
   }, [boardDetails.id]);
 
@@ -51,7 +51,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
       chnage: false,
     }));
 
-    router.push(`/home/board/${param[0]}`);
+    router.push(`/Home/board/${param[0]}`);
   }
 
   return (

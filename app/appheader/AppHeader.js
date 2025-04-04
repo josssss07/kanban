@@ -5,7 +5,7 @@ import { MoreVertical } from "react-feather";
 import UnitElemDisplay from "../components/ui/UnitElemDisplay";
 import { useContext, useState } from "react";
 import AddNewTask from "../task/AddTask";
-import ChangeOptionBoard from "../home/board/ChangeBoard";
+import ChangeOptionBoard from "../Home/board/ChangeBoard";
 import { BoardNameContext } from "../helpers/DisplayNavContext";
 
 export default function AppHeader() {
