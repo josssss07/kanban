@@ -10,6 +10,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
   const [board, setBoard] = useState();
   const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);
   const [userId, setUserId] = useContext(UserIdContext);
+  
 
   const router = useRouter();
   useEffect(() => {
@@ -34,20 +35,40 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
       }
     };
     fetchData();
-  }, [newElem, boardDetails?.newBoard]);
+  }, []);
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+    const { data: BoardData, error: BoardError } = await supabase
+    .from("boards")
+    .select("*")
+    .eq("userid", userId);
+
+  if (BoardError) {
+    throw new Error("failed to fetch board");
+  }
+  
+  setBoard(BoardData);
+}
+fetchData();
+  }, [boardDetails?.change])
 
   useEffect(() => {
+    console.log("pushing to the new boardid");
     if (boardDetails?.id) {
       router.push(`/Boards/${boardDetails.id}`);
     }
   }, [boardDetails?.id]);
+
+
+
 
   function callAnotherBoard(param) {
     setBoardDetails((prev) => ({
       ...prev,
       name: param[1],
       id: param[0],
-      chnage: false,
+      change: !prev.change,
     }));
 
     router.push(`/Boards/${param[0]}`);

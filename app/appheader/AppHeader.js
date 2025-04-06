@@ -11,7 +11,9 @@ import { BoardDetailsContext } from "../Home/AllContext";
 export default function AppHeader() {   
   const [addTaskDialog, setAddTaskDialog] = useState(false);   
   const [changeBoard, setChangeBoard] = useState(false);   
-  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);   
+  const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext); 
+  console.log(boardDetails);  
+  console.log("board details name from app header: " , boardDetails.name);
   
   function addNewTask() {     
     setAddTaskDialog(!addTaskDialog);   

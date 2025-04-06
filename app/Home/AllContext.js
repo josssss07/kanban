@@ -16,6 +16,7 @@ export default function AllContext({user, children }) {
     id: 0,
     change: true,
     newBoard: false,
+    rerun: false,
   });
   const [displayNav, setDisplayNav] = useState(true);
   

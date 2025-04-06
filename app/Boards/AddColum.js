@@ -20,7 +20,10 @@ export default function AddColumns() {
   async function handleSubmit(e) {
     e.preventDefault();
     await insertNewHeader(column, boardDetails);
-    setBoardDetails(!boardDetails.change);
+    setBoardDetails((prevBoard)=>({
+      ...prevBoard,
+      change: !prevBoard.change
+    }))
     setAddColumn(!addColumn);
   }
 
