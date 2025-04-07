@@ -90,7 +90,11 @@ export default function AddNewTask({ open, onChange }) {
     }
     console.log("success");
     console.log(boardDetails.change);
-    setBoardDetails(!boardDetails.change);
+    setBoardDetails((prevBoard)=>({
+      ...prevBoard,
+      change: !prevBoard.change,
+    }));
+    console.log(boardDetails.name);
     onChange(!open);
   }
 

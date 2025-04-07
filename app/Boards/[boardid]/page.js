@@ -12,8 +12,6 @@ export default function Board() {
 
   const [headers, setHeaders] = useState();
   const [tasks, setTasks] = useState();
-  console.log("DisplayNavContext:", useContext(DisplayNavContext));
-  console.log("BoardDetailsContext:", useContext(BoardDetailsContext));
   
   const [id, setId] = useContext(DisplayNavContext);
   const [boardDetails, setBoardDetails] = useContext(BoardDetailsContext);

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createNote, updateNote, deleteNote, getNoteById } from '../utils/noteFunctions';
 
 const Notepad = ({ noteId, onNoteSaved, onNoteDeleted }) => {

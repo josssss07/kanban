@@ -1,24 +1,4 @@
-// import { create } from "zustand";
 
-// const useStore = create((set) => ({
-//   user: null, // Default value
-
-//   setUser: (user) => {
-//     if (typeof window !== "undefined") {  // Ensure localStorage is accessible
-//       localStorage.setItem("user", JSON.stringify(user));
-//     }
-//     set({ user });
-//   },
-
-//   loadUser: () => {
-//     if (typeof window !== "undefined") {  // Prevent server-side execution
-//       const storedUser = JSON.parse(localStorage.getItem("user")) || null;
-//       set({ user: storedUser });
-//     }
-//   }
-// }));
-
-// export default useStore;
 import { create } from "zustand";
 import supabase from "./supabaseclient";
 

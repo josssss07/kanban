@@ -31,11 +31,11 @@ export default function DeleteBoard({
         return board.boardname != boardDetails.boardname;
       })
     );
-    setBoardDetails({
+    setBoardDetails((prevBoard)=>({
+      ...prevBoard,
       name: Board[0].boardname,
       id: Board[0].boardid,
-      change: true,
-    });
+    }));
 
     onChange(!open);
   }

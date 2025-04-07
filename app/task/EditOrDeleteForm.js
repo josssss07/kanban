@@ -49,7 +49,10 @@ export default function EditorDeletTaskForm({ open, onChange, task, status }) {
     if (newTaskError) {
       console.log("Couldnt get the tasks");
     }
-    setBoardDetails(!boardDetails.change);
+    setBoardDetails((prevBoard)=>({
+      ...prevBoard,
+      change: !prevBoard.change
+    }));
     onChange(!open);
   }
 
@@ -61,7 +64,10 @@ export default function EditorDeletTaskForm({ open, onChange, task, status }) {
     if (newTaskError) {
       console.log("Couldnt delete tasks");
     }
-    setBoardDetails(!boardDetails.change);
+    setBoardDetails((prevBoard)=>({
+      ...prevBoard,
+      change: !prevBoard.change
+    }));
     onChange(!open);
   }
 

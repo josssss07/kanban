@@ -84,6 +84,7 @@ export default function EditBoard({ open, onChange }) {
     if (boardError) {
       throw new Error("Update board failed", boardError);
     }
+    console.log(boardDetails.name)
   }
 
   async function handleSubmit(e) {
@@ -108,7 +109,6 @@ export default function EditBoard({ open, onChange }) {
       ...prevBoard,
       change: !prevBoard.change,
     }));
-
     onChange(!open);
   }
 
