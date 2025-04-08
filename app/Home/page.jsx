@@ -7,22 +7,23 @@ import useStore from '../global';
 
 
 export default async function PrivatePage() {
-  console.log("running");
-  const supabase = await createClient()
+  // console.log("running");
+  // const supabase = await createClient()
 
-  const { data, error } = await supabase.auth.getUser()
-  console.log(data);
-  if (error || !data?.user) {
-    redirect('/login')
-  }
+  // const { data, error } = await supabase.auth.getUser()
+  // console.log(data);
+  // if (error || !data?.user) {
+  //   redirect('/login')
+  // }
   
 
   return (
-    <div>
-      <AllContext user = {data.user}>
-      <Sidebar user={data.user}></Sidebar>
-      </AllContext>
-    </div>
+    // <div>
+    //   <AllContext user = {data.user}>
+    //   <Sidebar user={data.user}></Sidebar>
+    //   </AllContext>
+    // </div>
+    <></>
 
 
   );

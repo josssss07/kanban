@@ -24,16 +24,16 @@ export default function Sidebar({ notes, onNoteSelect, onNewNote, activeNoteId }
           <ul>
             {notes.map((note) => (
               <li 
-                key={note.id}
+                key={note.noteid}
                 className={`px-4 py-3 border-b border-purple-600 cursor-pointer hover:bg-gray-700 transition-colors ${
-                  activeNoteId === note.id ? 'bg-purple-700' : ''
+                  activeNoteId === note.noteid ? 'bg-purple-700' : ''
                 }`}
-                onClick={() => onNoteSelect(note.id)}
+                onClick={() => onNoteSelect(note.noteid)}
               >
-                <h3 className="font-medium truncate">{note.title}</h3>
-                <p className="text-sm text-gray-400 truncate">{note.content.substring(0, 50)}</p>
+                <h3 className="font-medium truncate">{note.note_title}</h3>
+                <p className="text-sm text-gray-400 truncate">{note.note_content.substring(0, 50)}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  {new Date(note.updatedAt).toLocaleDateString()}
+                  {new Date(note.note_updated).toLocaleDateString()}
                 </p>
               </li>
             ))}

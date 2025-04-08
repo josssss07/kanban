@@ -1,13 +1,15 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   createNote,
   updateNote,
   deleteNote,
   getNoteById,
 } from "../utils/noteFunctions";
+import { UserIdContext } from "../../AllContext";
 
 const Notepad = ({ noteId, onNoteSaved, onNoteDeleted }) => {
+  const [userId , setUserId] = useContext(UserIdContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,8 +27,8 @@ const Notepad = ({ noteId, onNoteSaved, onNoteDeleted }) => {
         try {
           const note = await getNoteById(noteId);
           if (note) {
-            setTitle(note.title);
-            setContent(note.content);
+            setTitle(note.note_title);
+            setContent(note.note_content);
             setIsNewNote(false);
           }
         } catch (error) {
@@ -71,7 +73,7 @@ const Notepad = ({ noteId, onNoteSaved, onNoteDeleted }) => {
       };
 
       if (isNewNote) {
-        const newNote = await createNote(noteData);
+        const newNote = await createNote(noteData , userId);
         if (onNoteSaved) onNoteSaved(newNote);
       } else {
         const updatedNote = await updateNote(noteId, noteData);
