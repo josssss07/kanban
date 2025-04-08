@@ -7,6 +7,7 @@ import React, {
   import GlobalContext from "./GlobalContext";
   import dayjs from "dayjs";
   
+  
   function savedEventsReducer(state, { type, payload }) {
     switch (type) {
       case "push":
@@ -22,10 +23,14 @@ import React, {
     }
   }
   function initEvents() {
+    if (typeof window === "undefined") {
+      return [];
+    }
     const storageEvents = localStorage.getItem("savedEvents");
     const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
     return parsedEvents;
   }
+  
   
   export default function ContextWrapper(props) {
     const [monthIndex, setMonthIndex] = useState(dayjs().month());
