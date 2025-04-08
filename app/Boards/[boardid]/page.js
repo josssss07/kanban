@@ -41,7 +41,7 @@ export default function Board() {
             );
             return { data: [] }; 
           }
-
+          console.log(taskData);
           return { data: taskData || [] };
         });
 

@@ -38,6 +38,7 @@ export default function DisplayBoards({ state, stateChange, newElem }) {
   }, []);
 
   useEffect(()=>{
+    console.log("run boards again");
     const fetchData = async()=>{
     const { data: BoardData, error: BoardError } = await supabase
     .from("boards")
