@@ -112,7 +112,7 @@ export default function Login() {
               </div>
             )}
 
-            <div className="space-y-4 mb-4">
+            {/* <div className="space-y-4 mb-4">
               <button 
                 onClick={handleGoogleSignIn}
                 className="flex items-center justify-center w-full py-2 px-4 bg-black border border-gray-700 rounded text-white hover:bg-gray-900 transition duration-200"
@@ -125,13 +125,13 @@ export default function Login() {
                 </svg>
                 Continue with Google
               </button>
-            </div>
+            </div> */}
 
-            <div className="flex items-center my-6">
+            {/* <div className="flex items-center my-6">
               <div className="flex-grow border-t border-gray-700"></div>
               <span className="px-4 text-sm text-gray-400">or</span>
               <div className="flex-grow border-t border-gray-700"></div>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -154,7 +154,7 @@ export default function Login() {
                     Password
                   </label>
                   <Link href="/forgot-password" className="text-sm text-gray-400 hover:text-purple-500">
-                    Forgot Password?
+                        Forgot Password?
                   </Link>
                 </div>
                 <input

@@ -93,7 +93,7 @@ export default function SignupForm() {
             <h1 className="text-white text-3xl font-bold mb-2 text-center">Create your account</h1>
             <p className="text-gray-400 mb-8 text-center">Sign up to get started with Kanban</p>
 
-            <div className="space-y-4 mb-4">
+            {/* <div className="space-y-4 mb-4">
             <button 
                 onClick={signinWithGoogle}
                 className="flex items-center justify-center w-full py-2 px-4 bg-black border border-gray-700 rounded text-white hover:bg-gray-900 transition duration-200"
@@ -106,13 +106,13 @@ export default function SignupForm() {
                 </svg>
                 Continue with Google
               </button>
-            </div>
+            </div> */}
 
-            <div className="flex items-center my-6">
+            {/* <div className="flex items-center my-6">
               <div className="flex-grow border-t border-gray-700"></div>
               <span className="px-4 text-sm text-gray-400">or</span>
               <div className="flex-grow border-t border-gray-700"></div>
-            </div>
+            </div> */}
 
             {error && (
               <div className="mb-4 p-3 bg-red-900/30 border border-red-800 rounded text-red-200 text-sm">

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Link from 'next/link';
 const Footer = () => {
   return (
     <div>
@@ -10,15 +10,11 @@ const Footer = () => {
             <p className="text-white-300">&copy; {new Date().getFullYear()} Kanban. All rights reserved.</p>
           </div>
           <div className="flex space-x-6">
-            <a href="#" className="text-white hover:text-purple-300 transition-colors">
-              Terms
-            </a>
-            <a href="#" className="text-white hover:text-purple-300 transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="text-white hover:text-purple-300 transition-colors">
-              Contact
-            </a>
+          <div className="flex space-x-6">
+            <Link href="/terms" className="text-white hover:text-purple-300 transition-colors">Terms</Link>
+            <Link href="/privacy" className="text-white hover:text-purple-300 transition-colors">Privacy</Link>
+            <Link href="/contact" className="text-white hover:text-purple-300 transition-colors">Contact</Link>
+          </div>
           </div>
         </div>
       </div>
