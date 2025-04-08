@@ -23,7 +23,7 @@ export default function RootLayoutClient({ children }) {
           <div className="flex">
             <UnitElemDisplay
               styles={
-                "text-heading-xl font-extrabold  align-text-bottom p-4"
+                "text-heading-xl font-extrabold  align-text-bottom p-4 text-heading-xl text-purple-400"
               }
             >
               Kanban

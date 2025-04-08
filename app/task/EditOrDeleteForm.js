@@ -128,10 +128,10 @@ export default function EditorDeletTaskForm({ open, onChange, task, status }) {
               </option>
             ))}
           </select>
-          <button className="w-full p-2">Edit</button>
+          <button className="w-full p-2 bg-white/10 rounded-full m-2">Edit</button>
           <br />
           <button
-            className="w-full p-2 bg-red-500"
+            className="w-full p-2 bg-red-500 rounded-full m-2"
             type="button"
             onClick={deleteTask}
           >

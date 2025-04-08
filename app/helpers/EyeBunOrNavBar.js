@@ -53,7 +53,7 @@ export default function EyeOrNav() {
               kanban
             </div>
 
-            <div className="px-4 py-2">
+            <div className="px-2 py-2">
               <h2 className="text-gray-400 uppercase text-sm tracking-wider mb-3 ml-2"></h2>
               
               <DisplayBoards
@@ -72,11 +72,14 @@ export default function EyeOrNav() {
               ) : undefined}
             </div>
             
-            <PageSection onChange={()=>{router.push('/Home')}} styles=" bg-purple-700 transition-colors duration-200 rounded-lg mx-4 my-2 py-2">
-              <span className="text-gray-200">Home</span>
-            </PageSection>
             
+            <div className="mt-auto">
+            <button onClick={()=>{router.push('/Home')}} className=" w-full bg-purple-700 hover:bg-purple-600 transition-colors duration-200 rounded-lg px-6 py-2">
+              <span className="text-gray-200">Home</span>
+            </button>
+            </div>
             <div className="mt-auto mb-4">
+            
               <button
                 className="flex items-center mx-6 py-2 px-4 rounded-lg text-gray-300 hover:text-purple-300 transition-colors"
                 onClick={() => {

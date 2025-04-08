@@ -33,7 +33,7 @@ export default function AddColumns() {
         onClickFun={() => {
           toggle();
         }}
-        className="w-fit p-2"
+        className="w-fit p-2 bg-white/10 hover:bg-white/20 "
         bgColor="bg-none"
         textColor="text-medium-grey"
       >
@@ -65,7 +65,7 @@ export default function AddColumns() {
             <input
               type="submit"
               value="Submit"
-              className="text-white bg-purple-700 rounded-full m-2 p-1 w-fit"
+              className="text-white bg-purple-700 rounded-full m-2 p-3 w-fit"
               onClick={() => {
                 setNumOfCols(numOfCols + 1);
               }}
