@@ -29,7 +29,7 @@ export default function AppHeader() {
               <line x1="3" y1="9" x2="21" y2="9"></line>
               <line x1="9" y1="21" x2="9" y2="9"></line>
             </svg>
-            <span className="text-lg font-medium ml-2">{boardDetails.name}</span>
+            <span className="text-lg font-medium ml-4">{boardDetails.name}</span>
           </div>
           <div className="flex items-center gap-4">             
             <Button               

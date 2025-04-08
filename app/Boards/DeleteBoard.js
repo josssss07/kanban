@@ -57,8 +57,7 @@ export default function DeleteBoard({
           <div className="flex">
             <Button
               textColor={"text-white"}
-              bgColor={"bg-red"}
-              className={"w-full"}
+              className={"w-full bg-red-600"}
               onClickFun={() => {
                 deleteBoard();
               }}
@@ -68,8 +67,7 @@ export default function DeleteBoard({
             <br />
             <Button
               textColor={"text-main-purple"}
-              bgColor={"bg-lines-light"}
-              className={"w-full"}
+              className={"w-full bg-white/20"}
             >
               Cancel
             </Button>

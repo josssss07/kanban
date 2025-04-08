@@ -133,9 +133,8 @@ export default function AddNewBoard({ open, onChange, newElem }) {
             </div>
           ))}
           <Button
-            className="w-full"
+            className="w-full bg-white/10 hover:bg-white/20 rounded-full"
             textColor={"text-main-purple"}
-            bgColor={"bg-lines-light"}
             onClickFun={(e) => {
               e.preventDefault();
               addToList();
@@ -147,7 +146,7 @@ export default function AddNewBoard({ open, onChange, newElem }) {
           <input
             type="submit"
             value="Create New Board"
-            className="text-white bg-main-purple rounded-full m-2 p-1 w-full"
+            className="text-white bg-purple-700 hover:bg-purple-600 rounded-full m-2 p-1 w-full"
           />
         </form>
       </CustomDialog>

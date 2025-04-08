@@ -356,7 +356,7 @@ export default function AddNewTask({ open, onChange }) {
           <input
             type="submit"
             value="Create Task"
-            className="text-white bg-main-purple rounded-full m-2 p-1 w-full"
+            className="text-white bg-purple-700 hover:bg-purple-600 rounded-full m-2 p-1 w-full"
           />
         </form>
       </CustomDialog>
