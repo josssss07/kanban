@@ -26,16 +26,45 @@ export default function UpdatePassword() {
   useEffect(() => {
     const checkAuthAndRecoveryToken = async () => {
       try {
-        // Check if we have a session
+        // Check URL for recovery token - handle both hash and query params
+        const hasRecoveryToken = window.location.hash.includes('type=recovery');
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasTokenInQuery = urlParams.has('token') || urlParams.has('access_token');
+        
+        if (hasRecoveryToken || hasTokenInQuery) {
+          // Attempt to exchange the token for a session if needed
+          try {
+            // Only try to exchange if we don't already have a session
+            const { data: { session: existingSession } } = await supabase.auth.getSession();
+            if (!existingSession) {
+              const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(
+                window.location.href
+              );
+              
+              if (exchangeError) {
+                console.error('Token exchange error:', exchangeError);
+                setIsValidLink(false);
+                setIsError(true);
+                setMessage('Invalid or expired password reset link. Please request a new one.');
+                setTimeout(() => {
+                  router.push('/reset-password');
+                }, 3000);
+                return;
+              }
+            }
+          } catch (exchangeError) {
+            console.error('Error exchanging token:', exchangeError);
+          }
+        }
+        
+        // Check if we have a valid session
         const { data: { session } } = await supabase.auth.getSession();
         
-        // Check URL for recovery token
-        const hasRecoveryToken = window.location.hash.includes('type=recovery');
-        
-        if (session || hasRecoveryToken) {
+        if (session) {
           setIsValidLink(true);
         } else {
-          // Redirect to reset password request page if no valid token found
+          // No valid session found
+          setIsValidLink(false);
           setMessage('Invalid or expired password reset link. Please request a new one.');
           setIsError(true);
           setTimeout(() => {
