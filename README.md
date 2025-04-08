@@ -45,9 +45,4 @@ Hosted on **Vercel** and designed with a clean, responsive UI for desktop and mo
 
 ---
 
-## 📦 Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/kanban.git
-   cd kanban
