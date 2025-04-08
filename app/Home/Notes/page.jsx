@@ -1,19 +1,21 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from './components/header';
 import Sidebar from './components/sidebar';
 import Notepad from './components/note';
 import { getNotes } from './utils/noteFunctions';
+import { UserIdContext } from '../AllContext';
 
 const Notes = () => {
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [notes, setNotes] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [userId , setUserId] = useContext(UserIdContext);
 
   // Load all notes initially and when refreshTrigger changes
   useEffect(() => {
     const loadNotes = async () => {
-      const allNotes = await getNotes();
+      const allNotes = await getNotes(userId);
       setNotes(allNotes);
     };
     
