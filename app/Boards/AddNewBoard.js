@@ -84,6 +84,7 @@ export default function AddNewBoard({ open, onChange, newElem }) {
     setBoardDetails((prevBoard)=>({
       ...prevBoard,
       newBoard: !prevBoard.newBoard,
+      change:!prevBoard.change
     }));
   }
 
